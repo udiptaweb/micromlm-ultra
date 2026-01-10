@@ -815,3 +815,246 @@ php artisan make:command CalculateBinaryCommission
 - [ ] Test carry-forward logic
 
 ---
+
+
+## Unilevel Plan Implementation Guide
+
+### 🔷 What is Unilevel MLM (In Simple Terms)
+
+In Unilevel MLM:
+- Each user can have **unlimited direct referrals**
+- There is **NO left/right**
+- Commissions flow upward **level by level**
+
+👉 Income is based on **depth, not pairing**.
+
+---
+
+### 🧠 Binary vs Unilevel (Quick Comparison)
+
+| Feature | Binary | Unilevel |
+|---------|--------|----------|
+| **Structure** | Left / Right | Unlimited width |
+| **Pairing** | Required | ❌ No |
+| **Carry Forward** | Yes | ❌ No |
+| **Complexity** | High | Low |
+| **Payout Timing** | Daily / Weekly | Instant or Daily |
+| **Best For** | Network balancing | Product sales |
+
+---
+
+### 1️⃣ How Unilevel Fits Your Current System
+
+You already have:
+- `sponsor_id` (parent)
+- `commissions` table with `level`
+- Config-driven commission rules
+- Wallet system
+
+✅ **So Unilevel needs NO new tables** ❗  
+It is purely **logic + traversal**.
+
+---
+
+### 2️⃣ Your Unilevel Config Explained
+
+```php
+'unilevel' => [
+  'enabled' => false,
+  'levels' => [
+    1 => 8,  // 8% commission on level 1
+    2 => 5,  // 5% commission on level 2
+    3 => 3,  // 3% commission on level 3
+    4 => 2,  // 2% commission on level 4
+    5 => 2,  // 2% commission on level 5
+    6 => 1,  // 1% commission on level 6
+    7 => 1,  // 1% commission on level 7
+  ],
+],
+```
+
+**Meaning:**
+
+| Level | Who gets paid | % |
+|-------|--------------|---|
+| 1 | Direct sponsor | 8% |
+| 2 | Sponsor's sponsor | 5% |
+| 3 | Level 3 upline | 3% |
+| ... | ... | ... |
+
+👉 **Level = distance from the source user**
+
+---
+
+### 3️⃣ WHAT Unilevel Pays On (BV Source)
+
+Unilevel commission is paid on:
+- ✔ Product purchase
+- ✔ Package upgrade
+- ✔ Subscription renewal
+- ✔ Registration fee (optional)
+
+⚠️ It is **not** paid on joining alone unless money enters the system.
+
+---
+
+### 4️⃣ WHEN Unilevel Commission Should Be Given
+
+Two industry-standard options:
+
+#### ✅ Option 1: Instant (Most Common)
+As soon as a purchase happens:
+1. Calculate upline
+2. Create commission records
+3. Mark as pending
+
+**Used by:**
+- Product-based MLMs
+- Subscription-based systems
+
+#### ✅ Option 2: Daily Batch
+- Accumulate BV for the day
+- Run nightly commission calculation
+
+**Used when:**
+- High transaction volume
+- Need auditing
+
+💡 **For MicroMLM Ultra, I recommend:**  
+**Instant creation + admin approval later**
+
+---
+
+### 5️⃣ HOW Unilevel Commission is Calculated (Step-by-Step)
+
+#### Example Scenario
+- User **D** makes a purchase of **₹1,000**
+- Unilevel enabled up to **3 levels**
+
+#### Step 1: Identify Upline Chain
+```
+Level 1 → C (sponsor)
+Level 2 → B
+Level 3 → A
+```
+
+#### Step 2: Calculate Commission
+
+| Level | % | Amount |
+|-------|---|--------|
+| 1 | 8% | ₹80 |
+| 2 | 5% | ₹50 |
+| 3 | 3% | ₹30 |
+
+#### Step 3: Save in Commissions Table
+```php
+[
+  'user_id' => C,
+  'from_user_id' => D,
+  'type' => 'unilevel',
+  'level' => 1,
+  'amount' => 80,
+  'status' => 'pending',
+]
+```
+Repeat for each level.
+
+#### Step 4: Wallet Credit (After Approval)
+- Credit commission wallet
+- Move to main wallet on payout
+
+---
+
+### 6️⃣ How This Maps to Your Tables (Perfect Match)
+
+#### Commissions Table
+You already have:
+- ✔ `type = 'unilevel'`
+- ✔ `level`
+- ✔ `from_user_id`
+- ✔ `status`
+
+✅ **No schema change needed**
+
+#### Wallets
+Use:
+```php
+$wallet->credit($amount, 'unilevel', 'Level '.$level.' commission');
+```
+
+---
+
+### 7️⃣ IMPORTANT Business Rules You Should Enforce
+
+- ✔ Upline must be **active**
+- ✔ Stop at configured **max level**
+- ✔ No sponsor → **stop traversal**
+- ✔ **Prevent duplicate commissions**
+- ✔ Apply **rank-based eligibility** (optional)
+
+---
+
+### 8️⃣ Recommended Implementation in Your App
+
+#### Create a Service
+```bash
+php artisan make:service UnilevelCommissionService
+```
+
+**Responsibilities:**
+- Traverse sponsor chain
+- Apply percentages
+- Create commission records
+
+#### Trigger Point
+Call Unilevel when:
+- ✅ Order is paid
+- ✅ Package is activated
+- ✅ Subscription is renewed
+- ❌ Not on registration (unless paid)
+
+---
+
+### 9️⃣ Binary + Unilevel Together (Very Common)
+
+Your system supports this perfectly:
+
+| Action | Binary | Unilevel |
+|--------|--------|----------|
+| Registration | BV only | ❌ |
+| Purchase | BV | ✔ |
+| Daily cron | ✔ | ❌ |
+| Matching bonus | ✔ | ❌ |
+
+This makes your plan:
+- **Balanced**
+- **Sales-driven**
+- **Scalable**
+
+---
+
+### 🔚 FINAL SUMMARY
+
+✅ Unilevel is **depth-based**, not pair-based  
+✅ Pays on **actual business** (BV)  
+✅ Can be **instant or batched**  
+✅ Fits **100% into your current architecture**  
+✅ **No extra tables required**  
+✅ **Easier than binary**, powerful for sales
+
+---
+
+### Unilevel Implementation Checklist
+
+- [ ] Enable unilevel in `config/mlm.php`
+- [ ] Create `UnilevelCommissionService`
+- [ ] Add commission calculation on purchase events
+- [ ] Implement upline traversal logic
+- [ ] Add level depth limiting
+- [ ] Test with multiple upline levels
+- [ ] Create unilevel-specific reports
+- [ ] Add unilevel genealogy visualization
+- [ ] Implement rank-based eligibility (optional)
+- [ ] Add commission approval workflow
+
+---
