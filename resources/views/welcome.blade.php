@@ -1,145 +1,968 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'MLM Pro') }} — Build Your Empire</title>
 
-        <title>Laravel</title>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700,700i&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.bunny.net/css?family=dm-sans:300,400,500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.bunny.net/css?family=syne:400,500,600,700,800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.bunny.net/css?family=unbounded:300,400,500,700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.bunny.net/css?family=instrument-serif:400,400i&display=swap" rel="stylesheet"/>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Styles -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="antialiased font-sans">
-        <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-            <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" />
-            <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-                <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                    <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
-                        <div class="flex lg:justify-center lg:col-start-2">
-                            <svg class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20]" viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M61.8548 14.6253C61.8778 14.7102 61.8895 14.7978 61.8897 14.8858V28.5615C61.8898 28.737 61.8434 28.9095 61.7554 29.0614C61.6675 29.2132 61.5409 29.3392 61.3887 29.4265L49.9104 36.0351V49.1337C49.9104 49.4902 49.7209 49.8192 49.4118 49.9987L25.4519 63.7916C25.3971 63.8227 25.3372 63.8427 25.2774 63.8639C25.255 63.8714 25.2338 63.8851 25.2101 63.8913C25.0426 63.9354 24.8666 63.9354 24.6991 63.8913C24.6716 63.8838 24.6467 63.8689 24.6205 63.8589C24.5657 63.8389 24.5084 63.8215 24.456 63.7916L0.501061 49.9987C0.348882 49.9113 0.222437 49.7853 0.134469 49.6334C0.0465019 49.4816 0.000120578 49.3092 0 49.1337L0 8.10652C0 8.01678 0.0124642 7.92953 0.0348998 7.84477C0.0423783 7.8161 0.0598282 7.78993 0.0697995 7.76126C0.0884958 7.70891 0.105946 7.65531 0.133367 7.6067C0.152063 7.5743 0.179485 7.54812 0.20192 7.51821C0.230588 7.47832 0.256763 7.43719 0.290416 7.40229C0.319084 7.37362 0.356476 7.35243 0.388883 7.32751C0.425029 7.29759 0.457436 7.26518 0.498568 7.2415L12.4779 0.345059C12.6296 0.257786 12.8015 0.211853 12.9765 0.211853C13.1515 0.211853 13.3234 0.257786 13.475 0.345059L25.4531 7.2415H25.4556C25.4955 7.26643 25.5292 7.29759 25.5653 7.32626C25.5977 7.35119 25.6339 7.37362 25.6625 7.40104C25.6974 7.43719 25.7224 7.47832 25.7523 7.51821C25.7735 7.54812 25.8021 7.5743 25.8196 7.6067C25.8483 7.65656 25.8645 7.70891 25.8844 7.76126C25.8944 7.78993 25.9118 7.8161 25.9193 7.84602C25.9423 7.93096 25.954 8.01853 25.9542 8.10652V33.7317L35.9355 27.9844V14.8846C35.9355 14.7973 35.948 14.7088 35.9704 14.6253C35.9792 14.5954 35.9954 14.5692 36.0053 14.5405C36.0253 14.4882 36.0427 14.4346 36.0702 14.386C36.0888 14.3536 36.1163 14.3274 36.1375 14.2975C36.1674 14.2576 36.1923 14.2165 36.2272 14.1816C36.2559 14.1529 36.292 14.1317 36.3244 14.1068C36.3618 14.0769 36.3942 14.0445 36.4341 14.0208L48.4147 7.12434C48.5663 7.03694 48.7383 6.99094 48.9133 6.99094C49.0883 6.99094 49.2602 7.03694 49.4118 7.12434L61.3899 14.0208C61.4323 14.0457 61.4647 14.0769 61.5021 14.1055C61.5333 14.1305 61.5694 14.1529 61.5981 14.1803C61.633 14.2165 61.6579 14.2576 61.6878 14.2975C61.7103 14.3274 61.7377 14.3536 61.7551 14.386C61.7838 14.4346 61.8 14.4882 61.8199 14.5405C61.8312 14.5692 61.8474 14.5954 61.8548 14.6253ZM59.893 27.9844V16.6121L55.7013 19.0252L49.9104 22.3593V33.7317L59.8942 27.9844H59.893ZM47.9149 48.5566V37.1768L42.2187 40.4299L25.953 49.7133V61.2003L47.9149 48.5566ZM1.99677 9.83281V48.5566L23.9562 61.199V49.7145L12.4841 43.2219L12.4804 43.2194L12.4754 43.2169C12.4368 43.1945 12.4044 43.1621 12.3682 43.1347C12.3371 43.1097 12.3009 43.0898 12.2735 43.0624L12.271 43.0586C12.2386 43.0275 12.2162 42.9888 12.1887 42.9539C12.1638 42.9203 12.1339 42.8916 12.114 42.8567L12.1127 42.853C12.0903 42.8156 12.0766 42.7707 12.0604 42.7283C12.0442 42.6909 12.023 42.656 12.013 42.6161C12.0005 42.5688 11.998 42.5177 11.9931 42.4691C11.9881 42.4317 11.9781 42.3943 11.9781 42.3569V15.5801L6.18848 12.2446L1.99677 9.83281ZM12.9777 2.36177L2.99764 8.10652L12.9752 13.8513L22.9541 8.10527L12.9752 2.36177H12.9777ZM18.1678 38.2138L23.9574 34.8809V9.83281L19.7657 12.2459L13.9749 15.5801V40.6281L18.1678 38.2138ZM48.9133 9.14105L38.9344 14.8858L48.9133 20.6305L58.8909 14.8846L48.9133 9.14105ZM47.9149 22.3593L42.124 19.0252L37.9323 16.6121V27.9844L43.7219 31.3174L47.9149 33.7317V22.3593ZM24.9533 47.987L39.59 39.631L46.9065 35.4555L36.9352 29.7145L25.4544 36.3242L14.9907 42.3482L24.9533 47.987Z" fill="currentColor"/></svg>
-                        </div>
-                        @if (Route::has('login'))
-                            <livewire:welcome.navigation />
-                        @endif
-                    </header>
+    @php
+        $theme = session('mlm_theme') ?? request()->cookie('mlm_theme') ?? 'obsidian';
 
-                    <main class="mt-6">
-                        <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                            <a
-                                href="https://laravel.com/docs"
-                                id="docs-card"
-                                class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                            >
-                                <div id="screenshot-container" class="relative flex w-full flex-1 items-stretch">
-                                    <img
-                                        src="https://laravel.com/assets/img/welcome/docs-light.svg"
-                                        alt="Laravel documentation screenshot"
-                                        class="aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden"
-                                        onerror="
-                                            document.getElementById('screenshot-container').classList.add('!hidden');
-                                            document.getElementById('docs-card').classList.add('!row-span-1');
-                                            document.getElementById('docs-card-content').classList.add('!flex-row');
-                                            document.getElementById('background').classList.add('!hidden');
-                                        "
-                                    />
-                                    <img
-                                        src="https://laravel.com/assets/img/welcome/docs-dark.svg"
-                                        alt="Laravel documentation screenshot"
-                                        class="hidden aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.25)] dark:block"
-                                    />
-                                    <div
-                                        class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"
-                                    ></div>
-                                </div>
+        $themes = [
+            'obsidian' => [
+                'bg'           => '#0A0A0F',
+                'bg2'          => '#111118',
+                'bg3'          => '#18181f',
+                'accent'       => '#8b5cf6',
+                'accent2'      => '#6d28d9',
+                'accentLight'  => '#c4b5fd',
+                'accentDim'    => 'rgba(139,92,246,0.12)',
+                'accentGlow'   => 'rgba(139,92,246,0.25)',
+                'border'       => 'rgba(139,92,246,0.18)',
+                'borderSoft'   => 'rgba(255,255,255,0.06)',
+                'text'         => '#F0EDE6',
+                'textMuted'    => 'rgba(240,237,230,0.5)',
+                'textFaint'    => 'rgba(240,237,230,0.25)',
+                'heroFont'     => "'Syne', sans-serif",
+                'bodyFont'     => "'DM Sans', sans-serif",
+                'heroWeight'   => '700',
+                'tagline'      => 'Architect Your Network',
+                'headline'     => 'Build Unstoppable<br><em>Downlines</em> That Scale',
+                'sub'          => 'The most powerful MLM platform engineered for serious network builders. Real-time genealogy, automated commissions, and predictive analytics in one command center.',
+                'feat1t' => 'Binary & Matrix Trees',      'feat1d' => 'Visualise every node of your downline in real time with our interactive genealogy engine.',        'feat1i' => 'tree',
+                'feat2t' => 'Instant Commissions',        'feat2d' => 'Automated payout calculations across unlimited plan types — binary, unilevel, board, and more.',   'feat2i' => 'zap',
+                'feat3t' => 'Deep Analytics',             'feat3d' => 'Predictive dashboards that surface your best performers and flag at-risk legs before they go cold.','feat3i' => 'bar',
+                'feat4t' => 'Rank & Reward Engine',       'feat4d' => 'Configure unlimited ranks, badges and incentive triggers without writing a single line of code.',   'feat4i' => 'lock',
+                'ctaPrimary'   => 'Start Building Free',
+                'ctaSecondary' => 'Watch Demo',
+                'navStyle'     => 'dark',
+                'bgPattern'    => 'grid',
+                'patternColor' => 'rgba(139,92,246,0.06)',
+                'glowColor'    => 'rgba(139,92,246,0.12)',
+                'glow2Color'   => 'rgba(109,40,217,0.10)',
+            ],
+            'arctic' => [
+                'bg'           => '#F4F6FB',
+                'bg2'          => '#FFFFFF',
+                'bg3'          => '#EDF0F7',
+                'accent'       => '#1A1A2E',
+                'accent2'      => '#2d2d4e',
+                'accentLight'  => '#4a4a7a',
+                'accentDim'    => 'rgba(26,26,46,0.06)',
+                'accentGlow'   => 'rgba(26,26,46,0.12)',
+                'border'       => '#DDE1EE',
+                'borderSoft'   => '#EEF0F8',
+                'text'         => '#1A1A2E',
+                'textMuted'    => '#64748b',
+                'textFaint'    => '#94a3b8',
+                'heroFont'     => "'Cormorant Garamond', serif",
+                'bodyFont'     => "'DM Sans', sans-serif",
+                'heroWeight'   => '600',
+                'tagline'      => 'Precision Network Management',
+                'headline'     => 'The Clean,<br><em>Intelligent</em> MLM Platform',
+                'sub'          => 'A refined approach to network marketing software. Distilled to its essentials — fast, clear, and beautifully organised for teams who value clarity over chaos.',
+                'feat1t' => 'Structured Genealogy',  'feat1d' => 'Crisp, zoomable network trees that make onboarding and auditing effortless.',                'feat1i' => 'tree',
+                'feat2t' => 'Automated Payouts',     'feat2d' => 'Set your plan rules once. Commissions calculate and queue automatically every cycle.',       'feat2i' => 'zap',
+                'feat3t' => 'Clean Dashboards',      'feat3d' => 'Uncluttered analytics that surface only the numbers that matter, when they matter.',         'feat3i' => 'bar',
+                'feat4t' => 'Role-Based Access',     'feat4d' => 'Granular permission layers so every member sees exactly what they need — nothing more.',     'feat4i' => 'lock',
+                'ctaPrimary'   => 'Get Started Free',
+                'ctaSecondary' => 'See How It Works',
+                'navStyle'     => 'light',
+                'bgPattern'    => 'dots',
+                'patternColor' => 'rgba(26,26,46,0.08)',
+                'glowColor'    => 'rgba(26,26,46,0.0)',
+                'glow2Color'   => 'rgba(26,26,46,0.04)',
+            ],
+            'ember' => [
+                'bg'           => '#0F0A0A',
+                'bg2'          => '#160D0D',
+                'bg3'          => '#1E1212',
+                'accent'       => '#ef4444',
+                'accent2'      => '#b91c1c',
+                'accentLight'  => '#fca5a5',
+                'accentDim'    => 'rgba(239,68,68,0.12)',
+                'accentGlow'   => 'rgba(239,68,68,0.28)',
+                'border'       => 'rgba(239,68,68,0.18)',
+                'borderSoft'   => 'rgba(255,255,255,0.05)',
+                'text'         => '#FFF1F1',
+                'textMuted'    => 'rgba(255,241,241,0.5)',
+                'textFaint'    => 'rgba(255,241,241,0.22)',
+                'heroFont'     => "'Unbounded', sans-serif",
+                'bodyFont'     => "'DM Sans', sans-serif",
+                'heroWeight'   => '700',
+                'tagline'      => 'Ignite Your Network',
+                'headline'     => 'Dominate.<br><em>Expand.</em> Repeat.',
+                'sub'          => 'Built for relentless growth. MLMPro gives you the firepower to recruit faster, pay instantly, and track every gain across your entire downline.',
+                'feat1t' => 'Aggressive Scaling Tools', 'feat1d' => 'Multi-level trees built to handle explosive growth — thousands of nodes, zero lag.',           'feat1i' => 'tree',
+                'feat2t' => 'Instant Commission Fire',  'feat2d' => "Don't wait for payroll. Trigger real-time payouts the moment a sale closes.",               'feat2i' => 'zap',
+                'feat3t' => 'War Room Analytics',       'feat3d' => 'Live leaderboards, leg performance heat maps, and daily battle stats for your team.',        'feat3i' => 'bar',
+                'feat4t' => 'Rank Acceleration',        'feat4d' => 'Gamified rank ladders that push every member to hit the next level — fast.',                 'feat4i' => 'lock',
+                'ctaPrimary'   => 'Ignite Now — Free',
+                'ctaSecondary' => 'See the Platform',
+                'navStyle'     => 'dark',
+                'bgPattern'    => 'diagonal',
+                'patternColor' => 'rgba(239,68,68,0.04)',
+                'glowColor'    => 'rgba(239,68,68,0.10)',
+                'glow2Color'   => 'rgba(185,28,28,0.10)',
+            ],
+            'forest' => [
+                'bg'           => '#071009',
+                'bg2'          => '#0C160F',
+                'bg3'          => '#111F14',
+                'accent'       => '#22c55e',
+                'accent2'      => '#15803d',
+                'accentLight'  => '#86efac',
+                'accentDim'    => 'rgba(34,197,94,0.10)',
+                'accentGlow'   => 'rgba(34,197,94,0.20)',
+                'border'       => 'rgba(34,197,94,0.16)',
+                'borderSoft'   => 'rgba(255,255,255,0.05)',
+                'text'         => '#F0FDF4',
+                'textMuted'    => 'rgba(240,253,244,0.5)',
+                'textFaint'    => 'rgba(240,253,244,0.22)',
+                'heroFont'     => "'Instrument Serif', serif",
+                'bodyFont'     => "'DM Sans', sans-serif",
+                'heroWeight'   => '400',
+                'tagline'      => 'Grow Organically',
+                'headline'     => 'Nurture Every Branch<br>of Your <em>Network</em>',
+                'sub'          => 'Like a forest, the strongest networks grow from deep roots. MLMPro gives you the tools to cultivate lasting relationships and a downline that thrives long-term.',
+                'feat1t' => 'Organic Network Growth',   'feat1d' => 'Visualise your downline like a living tree — watch it branch, grow, and bear fruit over time.',        'feat1i' => 'tree',
+                'feat2t' => 'Sustainable Commissions',  'feat2d' => 'Fair, transparent payout structures that reward consistency and long-term member retention.',          'feat2i' => 'zap',
+                'feat3t' => 'Growth Tracking',          'feat3d' => 'Monitor the health of each branch, spot weak spots early, and nurture your best growers.',            'feat3i' => 'bar',
+                'feat4t' => 'Community Tools',          'feat4d' => 'Built-in communication and mentoring features that help your network support each other.',            'feat4i' => 'lock',
+                'ctaPrimary'   => 'Plant Your Network',
+                'ctaSecondary' => 'Explore Features',
+                'navStyle'     => 'dark',
+                'bgPattern'    => 'organic',
+                'patternColor' => 'rgba(34,197,94,0.05)',
+                'glowColor'    => 'rgba(34,197,94,0.08)',
+                'glow2Color'   => 'rgba(21,128,61,0.08)',
+            ],
+            'sapphire' => [
+                'bg'           => '#070B14',
+                'bg2'          => '#0B1020',
+                'bg3'          => '#101828',
+                'accent'       => '#3b82f6',
+                'accent2'      => '#1d4ed8',
+                'accentLight'  => '#93c5fd',
+                'accentDim'    => 'rgba(59,130,246,0.10)',
+                'accentGlow'   => 'rgba(59,130,246,0.22)',
+                'border'       => 'rgba(59,130,246,0.18)',
+                'borderSoft'   => 'rgba(255,255,255,0.05)',
+                'text'         => '#EFF6FF',
+                'textMuted'    => 'rgba(239,246,255,0.5)',
+                'textFaint'    => 'rgba(239,246,255,0.22)',
+                'heroFont'     => "'Syne', sans-serif",
+                'bodyFont'     => "'DM Sans', sans-serif",
+                'heroWeight'   => '600',
+                'tagline'      => 'Enterprise-Grade MLM',
+                'headline'     => 'The Professional<br><em>Network</em> Operating System',
+                'sub'          => 'Designed for serious enterprise MLM operations. Compliance-ready, audit-friendly, and built to scale from startup to multinational without changing platforms.',
+                'feat1t' => 'Enterprise Genealogy',   'feat1d' => 'Multi-country, multi-currency network trees with full audit trails and compliance reporting.',       'feat1i' => 'tree',
+                'feat2t' => 'Payroll Integration',    'feat2d' => 'Connect to your existing payroll and banking infrastructure via secure REST APIs.',                   'feat2i' => 'zap',
+                'feat3t' => 'Executive Dashboards',   'feat3d' => 'Board-level reporting with KPI tracking, forecasting models, and exportable compliance reports.',    'feat3i' => 'bar',
+                'feat4t' => 'Compliance & Security',  'feat4d' => 'SOC 2 ready architecture, 2FA enforcement, and full transaction audit logs built in.',               'feat4i' => 'lock',
+                'ctaPrimary'   => 'Request Enterprise Demo',
+                'ctaSecondary' => 'View Pricing',
+                'navStyle'     => 'dark',
+                'bgPattern'    => 'circuit',
+                'patternColor' => 'rgba(59,130,246,0.05)',
+                'glowColor'    => 'rgba(59,130,246,0.10)',
+                'glow2Color'   => 'rgba(29,78,216,0.0)',
+            ],
+            'luxe' => [
+                'bg'           => '#0A0800',
+                'bg2'          => '#120F02',
+                'bg3'          => '#1C1900',
+                'accent'       => '#C9A84C',
+                'accent2'      => '#92720A',
+                'accentLight'  => '#E8C97A',
+                'accentDim'    => 'rgba(201,168,76,0.10)',
+                'accentGlow'   => 'rgba(201,168,76,0.20)',
+                'border'       => 'rgba(201,168,76,0.20)',
+                'borderSoft'   => 'rgba(255,255,255,0.05)',
+                'text'         => '#FDF6E3',
+                'textMuted'    => 'rgba(253,246,227,0.5)',
+                'textFaint'    => 'rgba(253,246,227,0.22)',
+                'heroFont'     => "'Cormorant Garamond', serif",
+                'bodyFont'     => "'DM Sans', sans-serif",
+                'heroWeight'   => '500',
+                'tagline'      => 'The Premier Choice',
+                'headline'     => 'Where Wealth<br><em>Multiplies</em> With Elegance',
+                'sub'          => 'MLMPro Luxe is crafted for the discerning network leader. Sophisticated commission structures, white-glove onboarding, and a platform that reflects the prestige of your brand.',
+                'feat1t' => 'Prestige Network Trees',   'feat1d' => 'Beautifully rendered genealogy maps that reflect the calibre of your distribution network.',        'feat1i' => 'tree',
+                'feat2t' => 'Bespoke Commission Plans', 'feat2d' => 'Craft intricate, multi-tier commission structures tailored precisely to your business model.',       'feat2i' => 'zap',
+                'feat3t' => 'Private Analytics Suite',  'feat3d' => 'Exclusive reporting dashboards with concierge-level insight into every facet of your network.',     'feat3i' => 'bar',
+                'feat4t' => 'White-Label Platform',     'feat4d' => 'Deploy under your own brand with custom domains, logos, and fully bespoke styling.',                'feat4i' => 'lock',
+                'ctaPrimary'   => 'Request Private Access',
+                'ctaSecondary' => 'Discover More',
+                'navStyle'     => 'dark',
+                'bgPattern'    => 'grid',
+                'patternColor' => 'rgba(201,168,76,0.05)',
+                'glowColor'    => 'rgba(201,168,76,0.10)',
+                'glow2Color'   => 'rgba(146,114,10,0.10)',
+            ],
+        ];
 
-                                <div class="relative flex items-center gap-6 lg:items-end">
-                                    <div id="docs-card-content" class="flex items-start gap-6 lg:flex-col">
-                                        <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                            <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#FF2D20" d="M23 4a1 1 0 0 0-1.447-.894L12.224 7.77a.5.5 0 0 1-.448 0L2.447 3.106A1 1 0 0 0 1 4v13.382a1.99 1.99 0 0 0 1.105 1.79l9.448 4.728c.14.065.293.1.447.1.154-.005.306-.04.447-.105l9.453-4.724a1.99 1.99 0 0 0 1.1-1.789V4ZM3 6.023a.25.25 0 0 1 .362-.223l7.5 3.75a.251.251 0 0 1 .138.223v11.2a.25.25 0 0 1-.362.224l-7.5-3.75a.25.25 0 0 1-.138-.22V6.023Zm18 11.2a.25.25 0 0 1-.138.224l-7.5 3.75a.249.249 0 0 1-.329-.099.249.249 0 0 1-.033-.12V9.772a.251.251 0 0 1 .138-.224l7.5-3.75a.25.25 0 0 1 .362.224v11.2Z"/><path fill="#FF2D20" d="m3.55 1.893 8 4.048a1.008 1.008 0 0 0 .9 0l8-4.048a1 1 0 0 0-.9-1.785l-7.322 3.706a.506.506 0 0 1-.452 0L4.454.108a1 1 0 0 0-.9 1.785H3.55Z"/></svg>
-                                        </div>
+        $t = $themes[$theme] ?? $themes['obsidian'];
+        $isLight = $t['navStyle'] === 'light';
+    @endphp
 
-                                        <div class="pt-3 sm:pt-5 lg:pt-0">
-                                            <h2 class="text-xl font-semibold text-black dark:text-white">Documentation</h2>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-                                            <p class="mt-4 text-sm/relaxed">
-                                                Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
-                                            </p>
-                                        </div>
-                                    </div>
+        :root {
+            --bg:          {{ $t['bg'] }};
+            --bg2:         {{ $t['bg2'] }};
+            --bg3:         {{ $t['bg3'] }};
+            --accent:      {{ $t['accent'] }};
+            --accent2:     {{ $t['accent2'] }};
+            --accentLight: {{ $t['accentLight'] }};
+            --accentDim:   {{ $t['accentDim'] }};
+            --accentGlow:  {{ $t['accentGlow'] }};
+            --border:      {{ $t['border'] }};
+            --borderSoft:  {{ $t['borderSoft'] }};
+            --text:        {{ $t['text'] }};
+            --textMuted:   {{ $t['textMuted'] }};
+            --textFaint:   {{ $t['textFaint'] }};
+            --heroFont:    {{ $t['heroFont'] }};
+            --bodyFont:    {{ $t['bodyFont'] }};
+            --heroWeight:  {{ $t['heroWeight'] }};
+        }
 
-                                    <svg class="size-6 shrink-0 stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-                                </div>
-                            </a>
+        html { scroll-behavior: smooth; }
 
-                            <a
-                                href="https://laracasts.com"
-                                class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                            >
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><g fill="#FF2D20"><path d="M24 8.25a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v12a2.5 2.5 0 0 0 2.5 2.5h19a2.5 2.5 0 0 0 2.5-2.5v-12Zm-7.765 5.868a1.221 1.221 0 0 1 0 2.264l-6.626 2.776A1.153 1.153 0 0 1 8 18.123v-5.746a1.151 1.151 0 0 1 1.609-1.035l6.626 2.776ZM19.564 1.677a.25.25 0 0 0-.177-.427H15.6a.106.106 0 0 0-.072.03l-4.54 4.543a.25.25 0 0 0 .177.427h3.783c.027 0 .054-.01.073-.03l4.543-4.543ZM22.071 1.318a.047.047 0 0 0-.045.013l-4.492 4.492a.249.249 0 0 0 .038.385.25.25 0 0 0 .14.042h5.784a.5.5 0 0 0 .5-.5v-2a2.5 2.5 0 0 0-1.925-2.432ZM13.014 1.677a.25.25 0 0 0-.178-.427H9.101a.106.106 0 0 0-.073.03l-4.54 4.543a.25.25 0 0 0 .177.427H8.4a.106.106 0 0 0 .073-.03l4.54-4.543ZM6.513 1.677a.25.25 0 0 0-.177-.427H2.5A2.5 2.5 0 0 0 0 3.75v2a.5.5 0 0 0 .5.5h1.4a.106.106 0 0 0 .073-.03l4.54-4.543Z"/></g></svg>
-                                </div>
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--bodyFont);
+            font-weight: 300;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-                                <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laracasts</h2>
+        /* ── Background ── */
+        .bg-layer {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            @if($t['bgPattern'] === 'grid' || $t['bgPattern'] === 'luxury')
+            background-image:
+                linear-gradient({{ $t['patternColor'] }} 1px, transparent 1px),
+                linear-gradient(90deg, {{ $t['patternColor'] }} 1px, transparent 1px);
+            background-size: 64px 64px;
+            @elseif($t['bgPattern'] === 'dots')
+            background-image: radial-gradient(circle, {{ $t['patternColor'] }} 1px, transparent 1px);
+            background-size: 28px 28px;
+            @elseif($t['bgPattern'] === 'diagonal')
+            background-image: repeating-linear-gradient(
+                -45deg, transparent, transparent 40px,
+                {{ $t['patternColor'] }} 40px, {{ $t['patternColor'] }} 41px
+            );
+            @elseif($t['bgPattern'] === 'circuit')
+            background-image:
+                linear-gradient({{ $t['patternColor'] }} 1px, transparent 1px),
+                linear-gradient(90deg, {{ $t['patternColor'] }} 1px, transparent 1px),
+                linear-gradient(rgba(59,130,246,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59,130,246,0.02) 1px, transparent 1px);
+            background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+            @elseif($t['bgPattern'] === 'organic')
+            background-image:
+                radial-gradient(ellipse at 20% 50%, {{ $t['patternColor'] }} 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, {{ $t['patternColor'] }} 0%, transparent 40%);
+            @endif
+        }
 
-                                    <p class="mt-4 text-sm/relaxed">
-                                        Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                    </p>
-                                </div>
+        .bg-glow {
+            position: fixed; pointer-events: none; z-index: 0;
+            top: -20%; left: 50%; transform: translateX(-50%);
+            width: 900px; height: 700px;
+            background: radial-gradient(ellipse, {{ $t['glowColor'] }} 0%, transparent 65%);
+        }
 
-                                <svg class="size-6 shrink-0 self-center stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-                            </a>
+        .bg-glow-2 {
+            position: fixed; pointer-events: none; z-index: 0;
+            bottom: -10%; right: -5%;
+            width: 600px; height: 600px;
+            background: radial-gradient(ellipse, {{ $t['glow2Color'] }} 0%, transparent 60%);
+        }
 
-                            <a
-                                href="https://laravel-news.com"
-                                class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                            >
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><g fill="#FF2D20"><path d="M8.75 4.5H5.5c-.69 0-1.25.56-1.25 1.25v4.75c0 .69.56 1.25 1.25 1.25h3.25c.69 0 1.25-.56 1.25-1.25V5.75c0-.69-.56-1.25-1.25-1.25Z"/><path d="M24 10a3 3 0 0 0-3-3h-2V2.5a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2V20a3.5 3.5 0 0 0 3.5 3.5h17A3.5 3.5 0 0 0 24 20V10ZM3.5 21.5A1.5 1.5 0 0 1 2 20V3a.5.5 0 0 1 .5-.5h14a.5.5 0 0 1 .5.5v17c0 .295.037.588.11.874a.5.5 0 0 1-.484.625L3.5 21.5ZM22 20a1.5 1.5 0 1 1-3 0V9.5a.5.5 0 0 1 .5-.5H21a1 1 0 0 1 1 1v10Z"/><path d="M12.751 6.047h2a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-2A.75.75 0 0 1 12 7.3v-.5a.75.75 0 0 1 .751-.753ZM12.751 10.047h2a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-2A.75.75 0 0 1 12 11.3v-.5a.75.75 0 0 1 .751-.753ZM4.751 14.047h10a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-10A.75.75 0 0 1 4 15.3v-.5a.75.75 0 0 1 .751-.753ZM4.75 18.047h7.5a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-7.5A.75.75 0 0 1 4 19.3v-.5a.75.75 0 0 1 .75-.753Z"/></g></svg>
-                                </div>
+        /* ── NAV ── */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 64px;
+            display: flex; align-items: center;
+            padding: 0 3rem;
+            border-bottom: 1px solid transparent;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .nav.scrolled {
+            background: {{ $isLight ? 'rgba(244,246,251,0.95)' : 'rgba(10,10,15,0.92)' }};
+            border-color: var(--borderSoft);
+        }
+        .nav-logo {
+            font-family: var(--heroFont);
+            font-size: 1.35rem; font-weight: var(--heroWeight);
+            color: var(--accent); letter-spacing: 0.03em;
+            text-decoration: none; flex-shrink: 0;
+        }
+        .nav-logo span { color: var(--text); font-weight: 300; }
+        .nav-links {
+            display: flex; gap: 2.5rem; margin-left: 3rem;
+            list-style: none; flex: 1;
+        }
+        .nav-links a {
+            color: var(--textMuted); text-decoration: none;
+            font-size: 0.875rem; font-weight: 400;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-actions { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+        .btn-nav-ghost {
+            padding: 0.5rem 1.2rem;
+            background: transparent; color: var(--textMuted);
+            border: 1px solid var(--borderSoft); border-radius: 6px;
+            font-family: var(--bodyFont); font-size: 0.82rem;
+            cursor: pointer; text-decoration: none; transition: color 0.2s, border-color 0.2s;
+        }
+        .btn-nav-ghost:hover { color: var(--text); border-color: var(--border); }
+        .btn-nav-primary {
+            padding: 0.5rem 1.4rem;
+            background: var(--accent); color: var(--bg);
+            border: none; border-radius: 6px;
+            font-family: var(--bodyFont); font-size: 0.82rem; font-weight: 500;
+            cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+        }
+        .btn-nav-primary:hover { opacity: 0.88; transform: translateY(-1px); }
 
-                                <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laravel News</h2>
+        /* ── HERO ── */
+        .hero {
+            position: relative; z-index: 1;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 5rem;
+        }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            padding: 0.35rem 1rem;
+            background: var(--accentDim); border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--accentLight);
+            margin-bottom: 2rem;
+            opacity: 0; animation: fadeUp 0.6s 0.1s ease forwards;
+        }
+        .eyebrow-dot {
+            width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+            animation: blink 2s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.75)} }
+        .hero h1 {
+            font-family: var(--heroFont);
+            font-size: clamp(2.8rem, 6vw, 5.5rem);
+            font-weight: var(--heroWeight);
+            line-height: 1.08; letter-spacing: -0.02em;
+            color: var(--text); max-width: 820px;
+            margin-bottom: 1.5rem;
+            opacity: 0; animation: fadeUp 0.7s 0.2s ease forwards;
+        }
+        .hero h1 em { font-style: italic; color: var(--accent); }
+        .hero-sub {
+            font-size: 1.05rem; line-height: 1.8;
+            color: var(--textMuted); max-width: 560px;
+            margin-bottom: 2.5rem;
+            opacity: 0; animation: fadeUp 0.7s 0.35s ease forwards;
+        }
+        .hero-cta {
+            display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+            margin-bottom: 4rem;
+            opacity: 0; animation: fadeUp 0.7s 0.5s ease forwards;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            padding: 0.9rem 2.2rem;
+            background: var(--accent); color: var(--bg);
+            border: none; border-radius: 8px;
+            font-family: var(--bodyFont); font-size: 0.9rem; font-weight: 500;
+            cursor: pointer; text-decoration: none;
+            transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 10px 40px var(--accentGlow); }
+        .btn-primary svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+        .btn-ghost {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            padding: 0.9rem 2rem;
+            background: transparent; color: var(--textMuted);
+            border: 1px solid var(--border); border-radius: 8px;
+            font-family: var(--bodyFont); font-size: 0.9rem;
+            cursor: pointer; text-decoration: none;
+            transition: color 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        .btn-ghost:hover { color: var(--text); border-color: var(--accentLight); transform: translateY(-2px); }
+        .btn-ghost svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-                                    <p class="mt-4 text-sm/relaxed">
-                                        Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                    </p>
-                                </div>
+        /* Stats */
+        .hero-stats {
+            display: flex; align-items: stretch;
+            border: 1px solid var(--border); border-radius: 12px;
+            overflow: hidden; background: var(--bg2);
+            opacity: 0; animation: fadeUp 0.7s 0.65s ease forwards;
+        }
+        .stat-item {
+            padding: 1.25rem 2.5rem; text-align: center;
+            border-right: 1px solid var(--border); flex: 1;
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-num {
+            font-family: var(--heroFont); font-size: 1.8rem;
+            font-weight: var(--heroWeight); color: var(--accent);
+            line-height: 1; margin-bottom: 0.35rem;
+        }
+        .stat-lbl { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--textFaint); }
 
-                                <svg class="size-6 shrink-0 self-center stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-                            </a>
+        /* Scroll hint */
+        .scroll-hint {
+            position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+            color: var(--textFaint); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+            opacity: 0; animation: fadeUp 0.6s 1.1s ease forwards;
+        }
+        .scroll-line {
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: lineDown 2s ease infinite;
+        }
+        @keyframes lineDown {
+            0%   { transform: scaleY(0); transform-origin: top; }
+            50%  { transform: scaleY(1); transform-origin: top; }
+            51%  { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
 
-                            <div class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800">
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <g fill="#FF2D20">
-                                            <path
-                                                d="M16.597 12.635a.247.247 0 0 0-.08-.237 2.234 2.234 0 0 1-.769-1.68c.001-.195.03-.39.084-.578a.25.25 0 0 0-.09-.267 8.8 8.8 0 0 0-4.826-1.66.25.25 0 0 0-.268.181 2.5 2.5 0 0 1-2.4 1.824.045.045 0 0 0-.045.037 12.255 12.255 0 0 0-.093 3.86.251.251 0 0 0 .208.214c2.22.366 4.367 1.08 6.362 2.118a.252.252 0 0 0 .32-.079 10.09 10.09 0 0 0 1.597-3.733ZM13.616 17.968a.25.25 0 0 0-.063-.407A19.697 19.697 0 0 0 8.91 15.98a.25.25 0 0 0-.287.325c.151.455.334.898.548 1.328.437.827.981 1.594 1.619 2.28a.249.249 0 0 0 .32.044 29.13 29.13 0 0 0 2.506-1.99ZM6.303 14.105a.25.25 0 0 0 .265-.274 13.048 13.048 0 0 1 .205-4.045.062.062 0 0 0-.022-.07 2.5 2.5 0 0 1-.777-.982.25.25 0 0 0-.271-.149 11 11 0 0 0-5.6 2.815.255.255 0 0 0-.075.163c-.008.135-.02.27-.02.406.002.8.084 1.598.246 2.381a.25.25 0 0 0 .303.193 19.924 19.924 0 0 1 5.746-.438ZM9.228 20.914a.25.25 0 0 0 .1-.393 11.53 11.53 0 0 1-1.5-2.22 12.238 12.238 0 0 1-.91-2.465.248.248 0 0 0-.22-.187 18.876 18.876 0 0 0-5.69.33.249.249 0 0 0-.179.336c.838 2.142 2.272 4 4.132 5.353a.254.254 0 0 0 .15.048c1.41-.01 2.807-.282 4.117-.802ZM18.93 12.957l-.005-.008a.25.25 0 0 0-.268-.082 2.21 2.21 0 0 1-.41.081.25.25 0 0 0-.217.2c-.582 2.66-2.127 5.35-5.75 7.843a.248.248 0 0 0-.09.299.25.25 0 0 0 .065.091 28.703 28.703 0 0 0 2.662 2.12.246.246 0 0 0 .209.037c2.579-.701 4.85-2.242 6.456-4.378a.25.25 0 0 0 .048-.189 13.51 13.51 0 0 0-2.7-6.014ZM5.702 7.058a.254.254 0 0 0 .2-.165A2.488 2.488 0 0 1 7.98 5.245a.093.093 0 0 0 .078-.062 19.734 19.734 0 0 1 3.055-4.74.25.25 0 0 0-.21-.41 12.009 12.009 0 0 0-10.4 8.558.25.25 0 0 0 .373.281 12.912 12.912 0 0 1 4.826-1.814ZM10.773 22.052a.25.25 0 0 0-.28-.046c-.758.356-1.55.635-2.365.833a.25.25 0 0 0-.022.48c1.252.43 2.568.65 3.893.65.1 0 .2 0 .3-.008a.25.25 0 0 0 .147-.444c-.526-.424-1.1-.917-1.673-1.465ZM18.744 8.436a.249.249 0 0 0 .15.228 2.246 2.246 0 0 1 1.352 2.054c0 .337-.08.67-.23.972a.25.25 0 0 0 .042.28l.007.009a15.016 15.016 0 0 1 2.52 4.6.25.25 0 0 0 .37.132.25.25 0 0 0 .096-.114c.623-1.464.944-3.039.945-4.63a12.005 12.005 0 0 0-5.78-10.258.25.25 0 0 0-.373.274c.547 2.109.85 4.274.901 6.453ZM9.61 5.38a.25.25 0 0 0 .08.31c.34.24.616.561.8.935a.25.25 0 0 0 .3.127.631.631 0 0 1 .206-.034c2.054.078 4.036.772 5.69 1.991a.251.251 0 0 0 .267.024c.046-.024.093-.047.141-.067a.25.25 0 0 0 .151-.23A29.98 29.98 0 0 0 15.957.764a.25.25 0 0 0-.16-.164 11.924 11.924 0 0 0-2.21-.518.252.252 0 0 0-.215.076A22.456 22.456 0 0 0 9.61 5.38Z"
-                                            />
-                                        </g>
-                                    </svg>
-                                </div>
+        /* ── SECTIONS ── */
+        .section {
+            position: relative; z-index: 1;
+            padding: 6rem 2rem;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .eyebrow {
+            font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--accentLight); margin-bottom: 0.75rem;
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+        .eyebrow-center { justify-content: center; }
+        .eyebrow-center::before { display: none; }
+        .section-title {
+            font-family: var(--heroFont); font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: var(--heroWeight); line-height: 1.15; color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+        .section-title em { font-style: italic; color: var(--accent); }
+        .section-desc { font-size: 0.95rem; color: var(--textMuted); max-width: 480px; line-height: 1.8; margin-bottom: 3rem; }
 
-                                <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Vibrant Ecosystem</h2>
+        /* Features grid */
+        .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+        @media (max-width: 700px) { .features-grid { grid-template-columns: 1fr; } }
+        .feat-card {
+            background: var(--bg2); border: 1px solid var(--borderSoft);
+            border-radius: 12px; padding: 1.75rem;
+            transition: border-color 0.25s, transform 0.25s;
+            position: relative; overflow: hidden;
+        }
+        .feat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .feat-card:hover { border-color: var(--border); transform: translateY(-4px); }
+        .feat-card:hover::before { opacity: 1; }
+        .feat-icon {
+            width: 40px; height: 40px;
+            background: var(--accentDim); border: 1px solid var(--border);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.1rem;
+        }
+        .feat-icon svg { width: 18px; height: 18px; stroke: var(--accentLight); fill: none; stroke-width: 1.8; }
+        .feat-title { font-family: var(--heroFont); font-size: 1.1rem; font-weight: 500; color: var(--text); margin-bottom: 0.6rem; }
+        .feat-desc { font-size: 0.875rem; color: var(--textMuted); line-height: 1.75; }
 
-                                    <p class="mt-4 text-sm/relaxed">
-                                        Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white dark:focus-visible:ring-[#FF2D20]">Forge</a>, <a href="https://vapor.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Vapor</a>, <a href="https://nova.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Nova</a>, <a href="https://envoyer.io" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Envoyer</a>, and <a href="https://herd.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Herd</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Echo</a>, <a href="https://laravel.com/docs/horizon" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Telescope</a>, and more.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
+        /* ── DASHBOARD PREVIEW ── */
+        .preview-section {
+            position: relative; z-index: 1;
+            padding: 2rem 2rem 6rem;
+        }
+        .preview-header { text-align: center; margin-bottom: 2.5rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+        .preview-wrap {
+            max-width: 1100px; margin: 0 auto;
+            border: 1px solid var(--border); border-radius: 16px;
+            overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+        }
+        .mock-chrome {
+            background: var(--bg3); border-bottom: 1px solid var(--borderSoft);
+            padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .mock-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-r { background: #ef4444; } .dot-y { background: #fbbf24; } .dot-g { background: #22c55e; }
+        .mock-url {
+            flex: 1; margin: 0 1rem;
+            background: var(--bg2); border: 1px solid var(--borderSoft);
+            border-radius: 6px; padding: 0.3rem 1rem;
+            font-size: 0.72rem; color: var(--textFaint); text-align: center;
+        }
+        .mock-dashboard { display: flex; background: var(--bg); min-height: 420px; }
+        .mock-sidebar {
+            width: 190px; flex-shrink: 0;
+            background: var(--bg2); border-right: 1px solid var(--borderSoft);
+            padding: 1.25rem 0;
+        }
+        .mock-logo-bar {
+            padding: 0 1.25rem 1rem;
+            font-family: var(--heroFont); font-size: 1rem; font-weight: 500; color: var(--accent);
+            border-bottom: 1px solid var(--borderSoft); margin-bottom: 0.75rem;
+        }
+        .mock-nav-item {
+            display: flex; align-items: center; gap: 0.6rem;
+            padding: 0.45rem 1.25rem; font-size: 0.72rem; color: var(--textFaint);
+        }
+        .mock-nav-item.active { color: var(--accentLight); background: var(--accentDim); border-left: 2px solid var(--accent); }
+        .mock-dot-sm { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+        .mock-content { flex: 1; padding: 1.25rem; }
+        .mock-toprow { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+        .mock-stat-card {
+            flex: 1; background: var(--bg2); border: 1px solid var(--borderSoft);
+            border-radius: 8px; padding: 0.85rem 1rem;
+        }
+        .mock-stat-num { font-size: 1.1rem; font-weight: 500; color: var(--accentLight); margin-bottom: 0.2rem; }
+        .mock-stat-lbl { font-size: 0.6rem; color: var(--textFaint); text-transform: uppercase; letter-spacing: 0.08em; }
+        .mock-chart-area {
+            background: var(--bg2); border: 1px solid var(--borderSoft);
+            border-radius: 8px; padding: 1rem; margin-bottom: 0.85rem;
+        }
+        .mock-chart-title { font-size: 0.68rem; color: var(--textMuted); margin-bottom: 0.65rem; }
+        .mock-bars { display: flex; align-items: flex-end; gap: 4px; height: 72px; }
+        .mock-bar {
+            flex: 1; border-radius: 2px 2px 0 0;
+            background: var(--accentDim); border: 1px solid var(--border);
+        }
+        .mock-bar.hi { background: var(--accent); border-color: var(--accent); }
+        .mock-table-area { background: var(--bg2); border: 1px solid var(--borderSoft); border-radius: 8px; overflow: hidden; }
+        .mock-table-head { display: flex; padding: 0.55rem 1rem; gap: 1rem; border-bottom: 1px solid var(--borderSoft); }
+        .mock-th { font-size: 0.58rem; color: var(--textFaint); text-transform: uppercase; letter-spacing: 0.1em; flex: 1; }
+        .mock-tr { display: flex; padding: 0.5rem 1rem; gap: 1rem; border-bottom: 1px solid var(--borderSoft); }
+        .mock-tr:last-child { border-bottom: none; }
+        .mock-td { font-size: 0.65rem; color: var(--textMuted); flex: 1; }
+        .mock-badge { display: inline-block; padding: 0.12rem 0.4rem; border-radius: 3px; font-size: 0.58rem; background: var(--accentDim); color: var(--accentLight); }
 
-                    <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </footer>
+        /* ── PRICING ── */
+        .plans-section {
+            position: relative; z-index: 1;
+            padding: 4rem 2rem 6rem;
+            border-top: 1px solid var(--borderSoft);
+        }
+        .plans-inner { max-width: 1100px; margin: 0 auto; }
+        .plans-header { text-align: center; margin-bottom: 3rem; }
+        .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+        @media (max-width: 800px) { .plans-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; } }
+        .plan-card {
+            background: var(--bg2); border: 1px solid var(--borderSoft);
+            border-radius: 14px; padding: 2rem 1.75rem;
+            transition: border-color 0.25s, transform 0.25s;
+            position: relative;
+        }
+        .plan-card:hover { transform: translateY(-4px); border-color: var(--border); }
+        .plan-card.featured { border-color: var(--accent); background: var(--bg3); }
+        .plan-featured-badge {
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--accent); color: var(--bg);
+            font-size: 0.63rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+            padding: 0.25rem 0.85rem; border-radius: 100px; white-space: nowrap;
+        }
+        .plan-name { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accentLight); margin-bottom: 0.75rem; }
+        .plan-price { font-family: var(--heroFont); font-size: 2.4rem; font-weight: var(--heroWeight); color: var(--text); line-height: 1; margin-bottom: 0.25rem; }
+        .plan-price span { font-size: 1rem; font-weight: 300; color: var(--textMuted); }
+        .plan-desc { font-size: 0.8rem; color: var(--textMuted); margin-bottom: 1.5rem; line-height: 1.6; }
+        .plan-divider { height: 1px; background: var(--borderSoft); margin-bottom: 1.25rem; }
+        .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.75rem; }
+        .plan-feature { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.82rem; color: var(--textMuted); }
+        .plan-check { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+        .btn-plan {
+            display: block; width: 100%; padding: 0.75rem; text-align: center;
+            border-radius: 8px; font-family: var(--bodyFont); font-size: 0.85rem; font-weight: 500;
+            cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+        }
+        .btn-plan-solid { background: var(--accent); color: var(--bg); border: none; }
+        .btn-plan-solid:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-plan-outline { background: transparent; color: var(--textMuted); border: 1px solid var(--border); }
+        .btn-plan-outline:hover { color: var(--text); border-color: var(--accentLight); }
+
+        /* ── CTA BANNER ── */
+        .cta-banner { position: relative; z-index: 1; padding: 2rem 2rem 6rem; }
+        .cta-inner {
+            max-width: 1100px; margin: 0 auto;
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 20px; padding: 4.5rem 3rem;
+            text-align: center; overflow: hidden; position: relative;
+        }
+        .cta-inner::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent 5%, var(--accent) 50%, transparent 95%);
+        }
+        .cta-glow {
+            position: absolute; top: -40%; left: 50%; transform: translateX(-50%);
+            width: 700px; height: 500px;
+            background: radial-gradient(ellipse, var(--accentGlow) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .cta-title {
+            font-family: var(--heroFont); font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: var(--heroWeight); color: var(--text); margin-bottom: 1rem; position: relative;
+        }
+        .cta-title em { color: var(--accent); font-style: italic; }
+        .cta-sub { font-size: 0.95rem; color: var(--textMuted); max-width: 460px; margin: 0 auto 2rem; line-height: 1.8; }
+        .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+        /* ── FOOTER ── */
+        .footer {
+            position: relative; z-index: 1;
+            border-top: 1px solid var(--borderSoft);
+            padding: 2.5rem 3rem;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 1rem;
+        }
+        .footer-logo { font-family: var(--heroFont); font-size: 1.1rem; font-weight: 500; color: var(--accent); }
+        .footer-logo span { color: var(--textFaint); font-weight: 300; }
+        .footer-text { font-size: 0.78rem; color: var(--textFaint); }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a { font-size: 0.78rem; color: var(--textFaint); text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accentLight); }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero { padding-top: 6rem; }
+            .hero-stats { flex-direction: column; }
+            .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+            .stat-item:last-child { border-bottom: none; }
+            .mock-sidebar { display: none; }
+            .footer { flex-direction: column; text-align: center; }
+            .footer-links { justify-content: center; }
+            .cta-inner { padding: 3rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="mainNav">
+    <a href="#" class="nav-logo">MLM<span>Pro</span></a>
+    <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#platform">Platform</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#">Docs</a></li>
+    </ul>
+    <div class="nav-actions">
+        @if (Route::has('login'))
+            @auth
+                <a href="{{ url('/dashboard') }}" class="btn-nav-ghost">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="btn-nav-ghost">Log in</a>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="btn-nav-primary">{{ $t['ctaPrimary'] }}</a>
+                @endif
+            @endauth
+        @endif
+    </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+    <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        {{ $t['tagline'] }}
+    </div>
+    <h1>{!! $t['headline'] !!}</h1>
+    <p class="hero-sub">{{ $t['sub'] }}</p>
+    <div class="hero-cta">
+        <a href="{{ Route::has('register') ? route('register') : '#' }}" class="btn-primary">
+            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-linejoin="round"/></svg>
+            {{ $t['ctaPrimary'] }}
+        </a>
+        <a href="#platform" class="btn-ghost">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" stroke-linejoin="round"/></svg>
+            {{ $t['ctaSecondary'] }}
+        </a>
+    </div>
+    <div class="hero-stats">
+        <div class="stat-item">
+            <div class="stat-num">2.4M+</div>
+            <div class="stat-lbl">Active Members</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">₹180Cr+</div>
+            <div class="stat-lbl">Commissions Paid</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">99.9%</div>
+            <div class="stat-lbl">Uptime SLA</div>
+        </div>
+    </div>
+    <div class="scroll-hint">
+        <div class="scroll-line"></div>
+        Scroll
+    </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="section" id="features">
+    <div class="reveal">
+        <div class="eyebrow">Core Capabilities</div>
+        <h2 class="section-title">Everything your network<br><em>needs to grow</em></h2>
+        <p class="section-desc">A complete suite of tools purpose-built for MLM operations of any scale and structure.</p>
+    </div>
+    @php
+        $iconPaths = [
+            'tree' => '<circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="12" y1="12" x2="5" y2="17"/><line x1="12" y1="12" x2="19" y2="17"/>',
+            'zap'  => '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+            'bar'  => '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+            'lock' => '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+        ];
+        $feats = [
+            ['i'=>$t['feat1i'],'t'=>$t['feat1t'],'d'=>$t['feat1d']],
+            ['i'=>$t['feat2i'],'t'=>$t['feat2t'],'d'=>$t['feat2d']],
+            ['i'=>$t['feat3i'],'t'=>$t['feat3t'],'d'=>$t['feat3d']],
+            ['i'=>$t['feat4i'],'t'=>$t['feat4t'],'d'=>$t['feat4d']],
+        ];
+    @endphp
+    <div class="features-grid">
+        @foreach($feats as $idx => $f)
+        <div class="feat-card reveal" style="transition-delay:{{ $idx * 0.1 }}s">
+            <div class="feat-icon">
+                <svg viewBox="0 0 24 24">{!! $iconPaths[$f['i']] !!}</svg>
+            </div>
+            <div class="feat-title">{{ $f['t'] }}</div>
+            <p class="feat-desc">{{ $f['d'] }}</p>
+        </div>
+        @endforeach
+    </div>
+</section>
+
+<!-- ═══ PLATFORM PREVIEW ═══ -->
+<section class="preview-section" id="platform">
+    <div class="preview-header reveal">
+        <div class="eyebrow eyebrow-center">Live Platform</div>
+        <h2 class="section-title" style="text-align:center;">Your command center,<br><em>always in control</em></h2>
+    </div>
+    <div class="preview-wrap reveal" style="transition-delay:0.15s">
+        <div class="mock-chrome">
+            <div class="mock-dot dot-r"></div>
+            <div class="mock-dot dot-y"></div>
+            <div class="mock-dot dot-g"></div>
+            <div class="mock-url">app.mlmpro.com/dashboard</div>
+        </div>
+        <div class="mock-dashboard">
+            <div class="mock-sidebar">
+                <div class="mock-logo-bar">MLMPro</div>
+                <div class="mock-nav-item active"><span class="mock-dot-sm"></span> Dashboard</div>
+                <div class="mock-nav-item"><span class="mock-dot-sm"></span> Network Tree</div>
+                <div class="mock-nav-item"><span class="mock-dot-sm"></span> Commissions</div>
+                <div class="mock-nav-item"><span class="mock-dot-sm"></span> Members</div>
+                <div class="mock-nav-item"><span class="mock-dot-sm"></span> Payouts</div>
+                <div class="mock-nav-item"><span class="mock-dot-sm"></span> Analytics</div>
+                <div class="mock-nav-item"><span class="mock-dot-sm"></span> Settings</div>
+            </div>
+            <div class="mock-content">
+                <div class="mock-toprow">
+                    <div class="mock-stat-card">
+                        <div class="mock-stat-num">₹2,84,320</div>
+                        <div class="mock-stat-lbl">Total Earnings</div>
+                    </div>
+                    <div class="mock-stat-card">
+                        <div class="mock-stat-num">1,247</div>
+                        <div class="mock-stat-lbl">Downline Members</div>
+                    </div>
+                    <div class="mock-stat-card">
+                        <div class="mock-stat-num">Gold IV</div>
+                        <div class="mock-stat-lbl">Current Rank</div>
+                    </div>
+                    <div class="mock-stat-card">
+                        <div class="mock-stat-num">₹18,400</div>
+                        <div class="mock-stat-lbl">This Month</div>
+                    </div>
+                </div>
+                <div class="mock-chart-area">
+                    <div class="mock-chart-title">Monthly Commission Trend</div>
+                    <div class="mock-bars">
+                        <div class="mock-bar" style="height:30%"></div>
+                        <div class="mock-bar" style="height:48%"></div>
+                        <div class="mock-bar" style="height:38%"></div>
+                        <div class="mock-bar" style="height:62%"></div>
+                        <div class="mock-bar hi" style="height:55%"></div>
+                        <div class="mock-bar" style="height:78%"></div>
+                        <div class="mock-bar" style="height:68%"></div>
+                        <div class="mock-bar hi" style="height:88%"></div>
+                        <div class="mock-bar" style="height:74%"></div>
+                        <div class="mock-bar" style="height:82%"></div>
+                        <div class="mock-bar hi" style="height:95%"></div>
+                        <div class="mock-bar" style="height:90%"></div>
+                    </div>
+                </div>
+                <div class="mock-table-area">
+                    <div class="mock-table-head">
+                        <div class="mock-th">Member</div>
+                        <div class="mock-th">Level</div>
+                        <div class="mock-th">Commission</div>
+                        <div class="mock-th">Status</div>
+                    </div>
+                    <div class="mock-tr">
+                        <div class="mock-td">Priya Sharma</div>
+                        <div class="mock-td">L1</div>
+                        <div class="mock-td">₹4,200</div>
+                        <div class="mock-td"><span class="mock-badge">Active</span></div>
+                    </div>
+                    <div class="mock-tr">
+                        <div class="mock-td">Rahul Verma</div>
+                        <div class="mock-td">L1</div>
+                        <div class="mock-td">₹3,800</div>
+                        <div class="mock-td"><span class="mock-badge">Active</span></div>
+                    </div>
+                    <div class="mock-tr">
+                        <div class="mock-td">Anita Nair</div>
+                        <div class="mock-td">L2</div>
+                        <div class="mock-td">₹1,950</div>
+                        <div class="mock-td"><span class="mock-badge">Active</span></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="plans-section" id="pricing">
+    <div class="plans-inner">
+        <div class="plans-header reveal">
+            <div class="eyebrow eyebrow-center">Simple Pricing</div>
+            <h2 class="section-title" style="text-align:center;">Choose your <em>plan</em></h2>
+            <p style="font-size:0.88rem;color:var(--textMuted);margin-top:0.6rem;">No hidden fees. Cancel anytime.</p>
+        </div>
+        <div class="plans-grid">
+            <div class="plan-card reveal">
+                <div class="plan-name">Starter</div>
+                <div class="plan-price">₹999 <span>/ month</span></div>
+                <p class="plan-desc">For new network builders getting started with their first downline.</p>
+                <div class="plan-divider"></div>
+                <ul class="plan-features">
+                    <li class="plan-feature"><span class="plan-check">✓</span> Up to 500 members</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> Binary & Unilevel plans</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> Basic commission engine</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> Email support</li>
+                </ul>
+                <a href="#" class="btn-plan btn-plan-outline">Get Started</a>
+            </div>
+            <div class="plan-card featured reveal" style="transition-delay:0.1s">
+                <div class="plan-featured-badge">Most Popular</div>
+                <div class="plan-name">Professional</div>
+                <div class="plan-price">₹2,999 <span>/ month</span></div>
+                <p class="plan-desc">For growing networks that need advanced tools and full automation.</p>
+                <div class="plan-divider"></div>
+                <ul class="plan-features">
+                    <li class="plan-feature"><span class="plan-check">✓</span> Unlimited members</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> All plan types incl. Board & Matrix</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> Automated payouts</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> Advanced analytics</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> Priority support</li>
+                </ul>
+                <a href="{{ Route::has('register') ? route('register') : '#' }}" class="btn-plan btn-plan-solid">{{ $t['ctaPrimary'] }}</a>
+            </div>
+            <div class="plan-card reveal" style="transition-delay:0.2s">
+                <div class="plan-name">Enterprise</div>
+                <div class="plan-price">Custom</div>
+                <p class="plan-desc">For large MLM organisations with custom compliance and integration needs.</p>
+                <div class="plan-divider"></div>
+                <ul class="plan-features">
+                    <li class="plan-feature"><span class="plan-check">✓</span> Everything in Pro</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> White-label branding</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> Custom integrations</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> Dedicated account manager</li>
+                    <li class="plan-feature"><span class="plan-check">✓</span> SLA & compliance reports</li>
+                </ul>
+                <a href="#" class="btn-plan btn-plan-outline">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CTA BANNER ═══ -->
+<section class="cta-banner">
+    <div class="cta-inner reveal">
+        <div class="cta-glow"></div>
+        <h2 class="cta-title">Ready to <em>build</em> your<br>empire?</h2>
+        <p class="cta-sub">Join thousands of network leaders who trust MLMPro to power their downlines. Start free, scale without limits.</p>
+        <div class="cta-btns">
+            <a href="{{ Route::has('register') ? route('register') : '#' }}" class="btn-primary">
+                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-linejoin="round"/></svg>
+                {{ $t['ctaPrimary'] }}
+            </a>
+            <a href="{{ Route::has('login') ? route('login') : '#' }}" class="btn-ghost">
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                Log in
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+    <div class="footer-logo">MLM<span>Pro</span></div>
+    <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#">Documentation</a>
+        <a href="{{ url('/theme-settings') }}">Change Theme</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+    </div>
+    <div class="footer-text">© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</div>
+</footer>
+
+<script>
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
 </html>

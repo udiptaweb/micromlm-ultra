@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('username')->unique()->after('email');
-            $table->string('referral_code')->unique()->after('username');
+            $table->string('username')->unique()->after('email')->nullable();
+            $table->string('referral_code')->unique()->after('username')->nullable();
             $table->foreignId('sponsor_id')->nullable()->after('referral_code')->constrained('users')->nullOnDelete();
             $table->foreignId('rank_id')->nullable()->after('sponsor_id')->constrained('ranks')->nullOnDelete();
             $table->enum('position', ['left', 'right'])->nullable()->after('rank_id');

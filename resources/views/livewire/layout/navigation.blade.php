@@ -3,8 +3,7 @@
 use App\Livewire\Actions\Logout;
 use Livewire\Volt\Component;
 
-new class extends Component
-{
+new class extends Component {
     /**
      * Log the current user out of the application.
      */
@@ -30,15 +29,100 @@ new class extends Component
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link href="/genealogy" :active="request()->is('genealogy')" wire:navigate>
-                        {{ __('Genealogy') }}
-                    </x-nav-link>
-                    <x-nav-link href="/commissions" :active="request()->is('commissions')" wire:navigate>
-                        {{ __('Commissions') }}
-                    </x-nav-link>
+                    @if (auth()->user() && auth()->user()->role === 'user')
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('genealogy') }}" :active="request()->routeIs('genealogy')">
+                            {{ __('Genealogy') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('commissions') }}" :active="request()->routeIs('commissions')">
+                            {{ __('Commissions') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('product.catalog') }}" :active="request()->routeIs('product.catalog')">
+                            {{ __('Buy Product') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('member.epin.request') }}" :active="request()->routeIs('member.epin.request')">
+                            {{ __('Request E-Pin') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('member.epins') }}" :active="request()->routeIs('member.epins')">
+                            {{ __(key: 'My E-Pins') }}
+                        </x-nav-link>
+                    @endif
+                    @if (auth()->user() && auth()->user()->role === 'admin')
+                        <x-nav-link href="{{ route('admin.users.index') }}" :active="request()->routeIs('admin.users.*')">
+                            {{ __('User Management') }}
+                        </x-nav-link>
+
+                        <x-nav-link href="{{ route('admin.user-commissions') }}" :active="request()->routeIs('admin.user-commissions')">
+                            {{ __('User Commission') }}
+                        </x-nav-link>
+
+                        <x-nav-link href="{{ route('admin.withdraw-requests') }}" :active="request()->routeIs('admin.withdraw-requests')">
+                            {{ __('Withdraw Requests') }}
+                        </x-nav-link>
+
+                        {{-- Products Dropdown --}}
+                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                            <x-dropdown align="right" width="48">
+                                <x-slot name="trigger">
+                                    <button
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                        {{-- FIXED: Changed x-text to standard Blade text --}}
+                                        <div>{{ __('Products') }}</div>
+
+                                        <div class="ms-1">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <x-dropdown-link :href="route('admin.products.create')" wire:navigate>
+                                        {{ __('Add Product') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('admin.products.index')" wire:navigate>
+                                        {{ __('View Products') }}
+                                    </x-dropdown-link>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                        {{-- E-Pins --}}
+                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                            <x-dropdown align="right" width="48">
+                                <x-slot name="trigger">
+                                    <button
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                        {{-- FIXED: Changed x-text to standard Blade text --}}
+                                        <div>{{ __('E-Pins') }}</div>
+
+                                        <div class="ms-1">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <x-dropdown-link :href="route('admin.e-pins.requests')" wire:navigate>
+                                        {{ __('E-Pin Requests') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('admin.e-pins')" wire:navigate>
+                                        {{ __('E-Pin Inventory') }}
+                                    </x-dropdown-link>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -46,12 +130,17 @@ new class extends Component
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
+                        <button
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name"
+                                x-on:profile-updated.window="name = $event.detail.name"></div>
 
                             <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
                                 </svg>
                             </div>
                         </button>
@@ -60,6 +149,9 @@ new class extends Component
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile')" wire:navigate>
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route(name: 'wallets')" wire:navigate>
+                            {{ __('Wallet') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -74,10 +166,14 @@ new class extends Component
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                <button @click="open = ! open"
+                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -85,23 +181,70 @@ new class extends Component
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="/genealogy" :active="request()->is('genealogy')" wire:navigate>
-                {{ __('Genealogy') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="/commissions" :active="request()->is('commissions')" wire:navigate>
-                {{ __('Commissions') }}
-            </x-responsive-nav-link>
+            @if (auth()->user() && auth()->user()->role === 'user')
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('genealogy') }}" :active="request()->routeIs('genealogy')" wire:navigate>
+                    {{ __('Genealogy') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('commissions') }}" :active="request()->routeIs('commissions')" wire:navigate>
+                    {{ __('Commissions') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('product.catalog') }}" :active="request()->routeIs('product.catalog')" wire:navigate>
+                    {{ __('Buy Product') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('member.epin.request') }}" :active="request()->routeIs('member.epin.request')" wire:navigate>
+                    {{ __('Request E-Pin') }}
+                </x-responsive-nav-link>
+                <x-nav-link href="{{ route('member.epins') }}" :active="request()->routeIs('member.epins.index')">
+                    {{ __('My E-Pins') }}
+                </x-nav-link>
+            @endif
+
+            @if (auth()->user() && auth()->user()->role === 'admin')
+                <x-responsive-nav-link href="{{ route('admin.users.index') }}" :active="request()->routeIs('admin.users.*')" wire:navigate>
+                    {{ __('User Management') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.user-commissions') }}" :active="request()->routeIs('admin.user-commissions')" wire:navigate>
+                    {{ __('User Commission') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.withdraw-requests') }}" :active="request()->routeIs('admin.withdraw-requests')" wire:navigate>
+                    {{ __('Withdraw Requests') }}
+                </x-responsive-nav-link>
+
+                <hr class="border-gray-200 my-2">
+
+                <div class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                    {{ __('Product Management') }}
+                </div>
+                <x-responsive-nav-link href="{{ route('admin.products.index') }}" :active="request()->routeIs('admin.products.index')" wire:navigate>
+                    {{ __('View Products') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.products.create') }}" :active="request()->routeIs('admin.products.create')" wire:navigate>
+                    {{ __('Add Product') }}
+                </x-responsive-nav-link>
+
+                <hr class="border-gray-200 my-2">
+
+                <div class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                    {{ __('E-Pin Management') }}
+                </div>
+                <x-responsive-nav-link href="{{ route('admin.e-pins.requests') }}" :active="request()->routeIs('admin.e-pins.requests')" wire:navigate>
+                    {{ __('E-Pin Requests') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('admin.e-pins') }}" :active="request()->routeIs('admin.e-pins')" wire:navigate>
+                    {{ __('E-Pin Inventory') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
-        <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800" x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
+                <div class="font-medium text-base text-gray-800" x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name"
+                    x-on:profile-updated.window="name = $event.detail.name"></div>
                 <div class="font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>
             </div>
 
@@ -109,8 +252,10 @@ new class extends Component
                 <x-responsive-nav-link :href="route('profile')" wire:navigate>
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('wallets')" wire:navigate>
+                    {{ __('Wallet') }}
+                </x-responsive-nav-link>
 
-                <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
                     <x-responsive-nav-link>
                         {{ __('Log Out') }}

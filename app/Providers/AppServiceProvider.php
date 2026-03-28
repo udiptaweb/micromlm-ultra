@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Models\User;
 use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
-
+use App\Services\BinaryService;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(BinaryService::class);
     }
 
     /**
@@ -23,5 +23,8 @@ class AppServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
         // Register the UserRegisteredListener
+        \Illuminate\Support\Facades\Gate::define('admin-access', function ($user) {
+            return $user->role === 'admin';
+        });
     }
 }

@@ -42,7 +42,7 @@ new #[Layout('layouts.app')] class extends Component
                 <div class="p-6">
                     <p class="text-sm font-medium text-gray-500">Total Earnings (Paid)</p>
                     <p class="text-3xl font-bold text-green-600">
-                        ${{ number_format($totalEarnings, 2) }}
+                        ₹{{ number_format($totalEarnings, 2) }}
                     </p>
                 </div>
             </div>
@@ -51,7 +51,7 @@ new #[Layout('layouts.app')] class extends Component
                 <div class="p-6">
                     <p class="text-sm font-medium text-gray-500">Approved Commissions</p>
                     <p class="text-3xl font-bold text-blue-600">
-                        ${{ number_format($approvedEarnings, 2) }}
+                        ₹{{ number_format($approvedEarnings, 2) }}
                     </p>
                 </div>
             </div>
@@ -60,7 +60,7 @@ new #[Layout('layouts.app')] class extends Component
                 <div class="p-6">
                     <p class="text-sm font-medium text-gray-500">Pending Commissions</p>
                     <p class="text-3xl font-bold text-yellow-600">
-                        ${{ number_format($pendingEarnings, 2) }}
+                        ₹{{ number_format($pendingEarnings, 2) }}
                     </p>
                 </div>
             </div>
@@ -117,7 +117,7 @@ new #[Layout('layouts.app')] class extends Component
                                         Level {{ $commission->level }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">
-                                        ${{ number_format($commission->amount, 2) }}
+                                        ₹{{ number_format($commission->amount, 2) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="px-2 py-1 text-xs font-medium rounded-full 

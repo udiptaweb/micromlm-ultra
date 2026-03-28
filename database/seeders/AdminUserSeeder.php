@@ -26,6 +26,7 @@ class AdminUserSeeder extends Seeder
             'rank_id' => $defaultRank->id,
             'status' => 'active',
             'email_verified_at' => now(),
+            'role' => 'admin',
         ]);
     }
 }

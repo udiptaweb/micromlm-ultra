@@ -1,31 +1,26 @@
 <?php
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | MLM System Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Configure your MLM system settings including commission rates,
-    | genealogy structure, and business rules.
-    |
-    */
-
-    'genealogy' => [
-        'type' => 'binary', // binary, unilevel, matrix
-        'spillover' => true, // Allow spillover placement
+    'user_roles' => [
+        'admin' => 'Admin',
+        'user' => 'User',
     ],
-
+    'genealogy' => [
+        'type' => 'binary',
+        'spillover' => false,
+        'max_levels' => 5,
+    ],
     'commission' => [
         'direct_referral' => [
             'enabled' => true,
-            'rate' => 10, // Percentage or fixed amount
-            'type' => 'percentage', // percentage or fixed
+            'rate' => 10,
+            'type' => 'percentage',
         ],
-
         'binary' => [
             'enabled' => true,
-            'pair_amount' => 100, // Amount earned per pair
+            'pair_amount' => 101,
+            'auto_placement' => true,
+            'placement_preference' => 'right',
             'capping' => [
                 'enabled' => true,
                 'daily_limit' => 1000,
@@ -35,7 +30,7 @@ return [
             'matching_bonus' => [
                 'enabled' => true,
                 'levels' => [
-                    1 => 10, // 10% of downline binary commission
+                    1 => 10,
                     2 => 5,
                     3 => 3,
                 ],
@@ -43,8 +38,8 @@ return [
         ],
         'matrix' => [
             'enabled' => false,
-            'width' => 3,   // Max direct referrals
-            'depth' => 5,   // Commission levels
+            'width' => 3,
+            'depth' => 5,
             'levels' => [
                 1 => 10,
                 2 => 8,
@@ -53,31 +48,27 @@ return [
                 5 => 2,
             ],
         ],
-
-
         'unilevel' => [
             'enabled' => false,
             'levels' => [
-                1 => 8,  // 8% on level 1
-                2 => 5,  // 5% on level 2
-                3 => 3,  // 3% on level 3
+                1 => 8,
+                2 => 5,
+                3 => 3,
                 4 => 2,
                 5 => 2,
                 6 => 1,
                 7 => 1,
             ],
         ],
-
         'generation' => [
             'enabled' => false,
             'generations' => 5,
-            'rate' => 5, // Percentage per generation
+            'rate' => 5,
         ],
     ],
-
     'ranks' => [
         'auto_rank_upgrade' => true,
-        'check_interval' => 'daily', // daily, weekly, monthly
+        'check_interval' => 'daily',
         'rank_levels' => [
             [
                 'name' => 'Member',
@@ -135,33 +126,27 @@ return [
             ],
         ],
     ],
-
-    'wallet' => [
-        'default_types' => ['main', 'commission', 'bonus'],
-        'minimum_withdrawal' => 50,
-        'withdrawal_fee' => 2, // Percentage
-        'withdrawal_processing_days' => 7,
-    ],
-
     'registration' => [
         'require_sponsor' => true,
-        'default_sponsor_username' => 'admin',
-        'auto_placement' => true,
-        'placement_preference' => 'left', // left, right, balanced
-        'email_verification_required' => true,
+        'default_sponsor_username' => 'root',
+        'email_verification_required' => false,
     ],
-
     'security' => [
         'max_login_attempts' => 5,
-        'lockout_duration' => 30, // minutes
-        'session_timeout' => 60, // minutes
+        'lockout_duration' => 30,
+        'session_timeout' => 60,
         'require_2fa' => false,
     ],
-
     'payout' => [
-        'schedule' => 'weekly', // daily, weekly, biweekly, monthly
-        'payout_day' => 'friday', // For weekly
-        'minimum_balance' => 50,
-        'auto_payout' => false,
+        'min_amount' => 2,
+        'max_amount' => 100000,
+        'charges_percent' => 5,
+        'processing_days' => 3,
+        'allowed_days' => [
+            'Monday',
+            'Thursday',
+            'Sunday',
+            'Saturday',
+        ],
     ],
 ];
