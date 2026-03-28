@@ -5,10 +5,11 @@ use App\Http\Controllers\Admin\ThemeController;
 use App\Http\Controllers\CryptoPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Seo\SeoController;
 use Illuminate\Support\Facades\Auth;
 
 
-Route::view('/', 'landing');
+Route::view('/', 'landing')->name('welcome');
 Route::view('/portfolio', 'welcome');
 Route::middleware(['auth', 'mlm.verified'])->group(function () {
     Route::view('dashboard', 'dashboard')
@@ -93,6 +94,51 @@ Route::middleware(['auth', 'can:admin-access'])->group(function () {
     Route::get('/admin/placements', \App\Livewire\Admin\ManagePlacements::class)
         ->name('admin.placements');
 });
+
+
+//seo
+Route::get('/sitemap.xml', [SeoController::class, 'index']);
+
+Route::get('/pricing', [SeoController::class, 'pricing'])->name('website.pricing');
+Route::get('/features', [SeoController::class, 'features'])->name('website.features');
+Route::get('/contact', [SeoController::class, 'contact'])->name('website.contact');
+
+Route::get('/binary-plan', [SeoController::class, 'binaryPlan'])->name('website.binary-plan');
+Route::get('/unilevel-plan', [SeoController::class, 'unilevelPlan'])->name('website.unilevel-plan');
+Route::get('/matrix-plan', [SeoController::class, 'matrixPlan'])->name('website.matrix-plan');
+
+Route::get('/blog/legality-of-mlm-in-india', [SeoController::class, 'legalityOfMlmInIndia'])
+    ->name('website.blog.legality-of-mlm-in-india');
+
+Route::get('/blog/how-to-select-best-mlm-software', [SeoController::class, 'howToSelectBestMlmSoftware'])
+    ->name('website.blog.how-to-select-best-mlm-software');
+
+Route::get('/mlm-software-in-guwahati', [SeoController::class, 'mlmSoftwareGuwahati'])
+    ->name('website.mlm-guwahati');
+
+Route::get('/mlm-software-in-kolkata', [SeoController::class, 'mlmSoftwareKolkata'])
+    ->name('website.mlm-kolkata');
+
+Route::get('/mlm-software-in-assam', [SeoController::class, 'mlmSoftwareAssam'])
+    ->name('website.mlm-assam');
+
+Route::get('/mlm-software-in-india', [SeoController::class, 'mlmSoftwareIndia'])
+    ->name('website.mlm-india');
+
+Route::get('/mlm-software', [SeoController::class, 'mlmSoftware'])
+    ->name('website.mlm-software');
+
+Route::get('/custom-mlm-software', [SeoController::class, 'customMlmSoftware'])
+    ->name('website.custom-mlm-software');
+
+Route::get('/buy-mlm-software', [SeoController::class, 'buyMlmSoftware'])
+    ->name('website.buy-mlm-software');
+
+Route::get('/network-marketing-software', [SeoController::class, 'networkMarketingSoftware'])
+    ->name('website.network-marketing-software');
+
+Route::get('/mlm-software-development', [SeoController::class, 'mlmSoftwareDevelopment'])
+    ->name('website.mlm-software-development');
 
 
 require __DIR__ . '/auth.php';

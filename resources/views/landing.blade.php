@@ -5,7 +5,33 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'MLM Pro') }} — Member Portal</title>
+    <title>Best MLM Software Development Company in India | Binary, Matrix, Unilevel MLM Software |
+        {{ config('app.name', 'MICRO MLM') }}</title>
+
+    <meta name="description"
+        content="Leading MLM software development company in India providing Binary, Matrix, Unilevel, Board, Investment and custom MLM software solutions. Based in Guwahati, Assam serving clients across India.">
+
+    <meta name="keywords"
+        content="MLM software development company, MLM software India, MLM software Guwahati, MLM software Assam, Binary MLM software, Matrix MLM software, Unilevel MLM software, Network marketing software, custom MLM software development">
+
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="{{ config('app.name', 'MICRO MLM') }}">
+
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <meta property="og:title" content="Best MLM Software Development Company in India">
+    <meta property="og:description"
+        content="Advanced MLM software solutions for Binary, Matrix, Unilevel and custom network marketing plans across India.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('images/logo.png') }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Best MLM Software Development Company in India">
+    <meta name="twitter:description"
+        content="Professional MLM software development company serving Guwahati, Assam and all India.">
+
+
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700,700i&display=swap"
@@ -14,7 +40,51 @@
     <link href="https://fonts.bunny.net/css?family=syne:400,500,600,700,800&display=swap" rel="stylesheet" />
     <link href="https://fonts.bunny.net/css?family=unbounded:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.bunny.net/css?family=instrument-serif:400,400i&display=swap" rel="stylesheet" />
+    @php
+        $softwareSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'SoftwareApplication',
+            'name' => 'MLM Software',
+            'operatingSystem' => 'Web-Based',
+            'applicationCategory' => 'BusinessApplication',
+            'aggregateRating' => [
+                '@type' => 'AggregateRating',
+                'ratingValue' => '4.9',
+                'reviewCount' => '124',
+            ],
+            'offers' => [
+                '@type' => 'Offer',
+                'price' => '0.00',
+                'priceCurrency' => 'INR',
+            ],
+        ];
 
+        $companySchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'SoftwareCompany',
+            'name' => config('app.name', 'MICRO MLM'),
+            'url' => url('/'),
+            'logo' => asset('images/logo.png'),
+            'description' =>
+                'Professional MLM software development company providing Binary, Matrix, Unilevel and custom network marketing software solutions.',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => 'Guwahati',
+                'addressRegion' => 'Assam',
+                'addressCountry' => 'India',
+            ],
+            'areaServed' => 'India',
+            'sameAs' => [url('/')],
+        ];
+    @endphp
+
+    <script type="application/ld+json">
+    @json($softwareSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)
+</script>
+
+    <script type="application/ld+json">
+    @json($companySchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)
+</script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @php
@@ -433,6 +503,73 @@
             margin-left: auto;
         }
 
+        /* MOBILE MENU TOGGLE */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 110;
+        }
+
+        .mobile-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            transition: 0.3s;
+        }
+
+        @media (max-width: 960px) {
+            .nav {
+                padding: 0 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-actions {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+                margin-left: auto;
+            }
+
+            .nav-links.active {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: var(--bg);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                z-index: 105;
+                gap: 2rem;
+            }
+
+            .nav-links.active a {
+                font-size: 1.5rem;
+            }
+
+            .nav-actions.active {
+                display: flex;
+                position: fixed;
+                bottom: 10%;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 106;
+            }
+        }
+
         .btn-nav-ghost {
             padding: 0.5rem 1.2rem;
             background: transparent;
@@ -480,51 +617,12 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 8rem 2rem 5rem;
-        }
-
-        .hero-eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.35rem 1rem;
-            background: var(--accentDim);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            font-size: 0.72rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--accentLight);
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeUp 0.6s 0.1s ease forwards;
-        }
-
-        .eyebrow-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent);
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1)
-            }
-
-            50% {
-                opacity: 0.4;
-                transform: scale(0.75)
-            }
+            padding: 8rem 1rem 5rem;
         }
 
         .hero h1 {
             font-family: var(--heroFont);
-            font-size: clamp(2.8rem, 6vw, 5.5rem);
+            font-size: clamp(2.2rem, 8vw, 5.5rem);
             font-weight: var(--heroWeight);
             line-height: 1.08;
             letter-spacing: -0.02em;
@@ -541,7 +639,7 @@
         }
 
         .hero-sub {
-            font-size: 1.05rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.05rem);
             line-height: 1.8;
             color: var(--textMuted);
             max-width: 560px;
@@ -584,15 +682,6 @@
             box-shadow: 0 10px 40px var(--accentGlow);
         }
 
-        .btn-primary svg,
-        .btn-primary svg * {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-        }
-
         .btn-ghost {
             display: inline-flex;
             align-items: center;
@@ -615,15 +704,6 @@
             transform: translateY(-2px);
         }
 
-        .btn-ghost svg,
-        .btn-ghost svg * {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-        }
-
         /* Stats */
         .hero-stats {
             display: flex;
@@ -634,6 +714,8 @@
             background: var(--bg2);
             opacity: 0;
             animation: fadeUp 0.7s 0.65s ease forwards;
+            width: 100%;
+            max-width: 800px;
         }
 
         .stat-item {
@@ -647,9 +729,25 @@
             border-right: none;
         }
 
+        @media (max-width: 600px) {
+            .hero-stats {
+                flex-direction: column;
+            }
+
+            .stat-item {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+            }
+
+            .stat-item:last-child {
+                border-bottom: none;
+            }
+        }
+
         .stat-num {
             font-family: var(--heroFont);
-            font-size: 1.8rem;
+            font-size: clamp(1.4rem, 5vw, 1.8rem);
             font-weight: var(--heroWeight);
             color: var(--accent);
             line-height: 1;
@@ -663,118 +761,31 @@
             color: var(--textFaint);
         }
 
-        /* Scroll hint */
-        .scroll-hint {
-            position: absolute;
-            bottom: 2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--textFaint);
-            font-size: 0.68rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: fadeUp 0.6s 1.1s ease forwards;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--accent), transparent);
-            animation: lineDown 2s ease infinite;
-        }
-
-        @keyframes lineDown {
-            0% {
-                transform: scaleY(0);
-                transform-origin: top;
-            }
-
-            50% {
-                transform: scaleY(1);
-                transform-origin: top;
-            }
-
-            51% {
-                transform: scaleY(1);
-                transform-origin: bottom;
-            }
-
-            100% {
-                transform: scaleY(0);
-                transform-origin: bottom;
-            }
-        }
-
         /* ── SECTIONS ── */
         .section {
             position: relative;
             z-index: 1;
-            padding: 6rem 2rem;
+            padding: 6rem 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .eyebrow {
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--accentLight);
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .eyebrow::before {
-            content: '';
-            width: 24px;
-            height: 1px;
-            background: var(--accent);
-        }
-
-        .eyebrow-center {
-            justify-content: center;
-        }
-
-        .eyebrow-center::before {
-            display: none;
-        }
-
         .section-title {
             font-family: var(--heroFont);
-            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-size: clamp(1.8rem, 5vw, 3rem);
             font-weight: var(--heroWeight);
             line-height: 1.15;
             color: var(--text);
             margin-bottom: 0.75rem;
         }
 
-        .section-title em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .section-desc {
-            font-size: 0.95rem;
-            color: var(--textMuted);
-            max-width: 480px;
-            line-height: 1.8;
-            margin-bottom: 3rem;
-        }
-
-        /* Features grid */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.25rem;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 768px) {
             .features-grid {
                 grid-template-columns: 1fr;
             }
@@ -786,78 +797,12 @@
             border-radius: 12px;
             padding: 1.75rem;
             transition: border-color 0.25s, transform 0.25s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .feat-card:hover {
-            border-color: var(--border);
-            transform: translateY(-4px);
-        }
-
-        .feat-card:hover::before {
-            opacity: 1;
-        }
-
-        .feat-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accentDim);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.1rem;
-        }
-
-        .feat-icon svg {
-            width: 18px;
-            height: 18px;
-            stroke: var(--accentLight);
-            fill: none;
-            stroke-width: 1.8;
-        }
-
-        .feat-title {
-            font-family: var(--heroFont);
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 0.6rem;
-        }
-
-        .feat-desc {
-            font-size: 0.875rem;
-            color: var(--textMuted);
-            line-height: 1.75;
         }
 
         /* ── DASHBOARD PREVIEW ── */
         .preview-section {
-            position: relative;
-            z-index: 1;
-            padding: 2rem 2rem 6rem;
-        }
-
-        .preview-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            max-width: 1100px;
-            margin-left: auto;
-            margin-right: auto;
+            padding: 2rem 1rem 6rem;
+            overflow: hidden;
         }
 
         .preview-wrap {
@@ -865,52 +810,12 @@
             margin: 0 auto;
             border: 1px solid var(--border);
             border-radius: 16px;
-            overflow: hidden;
+            background: var(--bg);
             box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
-        }
-
-        .mock-chrome {
-            background: var(--bg3);
-            border-bottom: 1px solid var(--borderSoft);
-            padding: 0.75rem 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .mock-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .dot-r {
-            background: #ef4444;
-        }
-
-        .dot-y {
-            background: #fbbf24;
-        }
-
-        .dot-g {
-            background: #22c55e;
-        }
-
-        .mock-url {
-            flex: 1;
-            margin: 0 1rem;
-            background: var(--bg2);
-            border: 1px solid var(--borderSoft);
-            border-radius: 6px;
-            padding: 0.3rem 1rem;
-            font-size: 0.72rem;
-            color: var(--textFaint);
-            text-align: center;
         }
 
         .mock-dashboard {
             display: flex;
-            background: var(--bg);
             min-height: 420px;
         }
 
@@ -922,37 +827,32 @@
             padding: 1.25rem 0;
         }
 
-        .mock-logo-bar {
-            padding: 0 1.25rem 1rem;
-            font-family: var(--heroFont);
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--accent);
-            border-bottom: 1px solid var(--borderSoft);
-            margin-bottom: 0.75rem;
-        }
+        @media (max-width: 850px) {
+            .mock-dashboard {
+                flex-direction: column;
+            }
 
-        .mock-nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.45rem 1.25rem;
-            font-size: 0.72rem;
-            color: var(--textFaint);
-        }
+            .mock-sidebar {
+                width: 100%;
+                display: flex;
+                overflow-x: auto;
+                padding: 0.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--borderSoft);
+            }
 
-        .mock-nav-item.active {
-            color: var(--accentLight);
-            background: var(--accentDim);
-            border-left: 2px solid var(--accent);
-        }
+            .mock-nav-item {
+                flex-shrink: 0;
+                white-space: nowrap;
+            }
 
-        .mock-dot-sm {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: currentColor;
-            flex-shrink: 0;
+            .mock-logo-bar {
+                display: none;
+            }
+
+            .mock-toprow {
+                flex-direction: column;
+            }
         }
 
         .mock-content {
@@ -974,187 +874,22 @@
             padding: 0.85rem 1rem;
         }
 
-        .mock-stat-num {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--accentLight);
-            margin-bottom: 0.2rem;
-        }
-
-        .mock-stat-lbl {
-            font-size: 0.6rem;
-            color: var(--textFaint);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .mock-chart-area {
-            background: var(--bg2);
-            border: 1px solid var(--borderSoft);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 0.85rem;
-        }
-
-        .mock-chart-title {
-            font-size: 0.68rem;
-            color: var(--textMuted);
-            margin-bottom: 0.65rem;
-        }
-
-        .mock-bars {
-            display: flex;
-            align-items: flex-end;
-            gap: 4px;
-            height: 72px;
-        }
-
-        .mock-bar {
-            flex: 1;
-            border-radius: 2px 2px 0 0;
-            background: var(--accentDim);
-            border: 1px solid var(--border);
-        }
-
-        .mock-bar.hi {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-
+        /* TABLE MOBILE FIX */
         .mock-table-area {
-            background: var(--bg2);
-            border: 1px solid var(--borderSoft);
-            border-radius: 8px;
-            overflow: hidden;
+            overflow-x: auto;
         }
 
-        .mock-table-head {
-            display: flex;
-            padding: 0.55rem 1rem;
-            gap: 1rem;
-            border-bottom: 1px solid var(--borderSoft);
-        }
-
-        .mock-th {
-            font-size: 0.58rem;
-            color: var(--textFaint);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            flex: 1;
-        }
-
+        .mock-table-head,
         .mock-tr {
-            display: flex;
-            padding: 0.55rem 1rem;
-            gap: 1rem;
-            border-bottom: 1px solid var(--borderSoft);
-            font-size: 0.65rem;
-            color: var(--text);
-        }
-
-        .mock-tr:last-child {
-            border-bottom: none;
-        }
-
-        .mock-td {
-            flex: 1;
-        }
-
-        .mock-td-accent {
-            color: var(--accentLight);
-            font-weight: 500;
-        }
-
-        /* ── CTA BANNER ── */
-        .cta-banner {
-            position: relative;
-            z-index: 1;
-            padding: 4rem 2rem 8rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .cta-inner {
-            position: relative;
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 4rem 2rem;
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .cta-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, var(--accentGlow) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .cta-title {
-            position: relative;
-            z-index: 1;
-            font-family: var(--heroFont);
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: var(--heroWeight);
-            color: var(--text);
-            margin-bottom: 1rem;
-            line-height: 1.1;
-        }
-
-        .cta-title em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .cta-sub {
-            position: relative;
-            z-index: 1;
-            font-size: 1rem;
-            color: var(--textMuted);
-            max-width: 500px;
-            margin: 0 auto 2rem;
-            line-height: 1.6;
-        }
-
-        .cta-btns {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            min-width: 500px;
         }
 
         /* ── FOOTER ── */
         .footer {
-            position: relative;
-            z-index: 1;
-            border-top: 1px solid var(--borderSoft);
-            background: var(--bg2);
-            padding: 4rem 2rem;
+            padding: 4rem 1.5rem;
             text-align: center;
-        }
-
-        .footer-logo {
-            font-family: var(--heroFont);
-            font-size: 1.5rem;
-            font-weight: var(--heroWeight);
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.03em;
-        }
-
-        .footer-logo span {
-            color: var(--text);
-            font-weight: 300;
+            background: var(--bg2);
+            border-top: 1px solid var(--borderSoft);
         }
 
         .footer-links {
@@ -1163,22 +898,6 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: var(--textMuted);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: var(--text);
-        }
-
-        .footer-text {
-            font-size: 0.75rem;
-            color: var(--textFaint);
         }
 
         @keyframes fadeUp {
@@ -1193,19 +912,30 @@
             }
         }
 
-        /* Reveal Animation Styles */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.21, 0.6, 0.35, 1),
-                transform 0.8s cubic-bezier(0.21, 0.6, 0.35, 1);
+            transition: 0.8s ease-out;
         }
 
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
+
+        .footer-links a {
+            color: var(--textMuted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accentLight);
+            transform: translateY(-1px);
+        }
     </style>
+
 </head>
 
 <body>
@@ -1216,20 +946,28 @@
 
     <nav class="nav" id="nav">
         <a href="#" class="nav-logo">MLM Pro<span>.</span></a>
-        <ul class="nav-links">
+
+        <button class="mobile-toggle" id="mobile-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
             <li><a href="#features">Features</a></li>
             <li><a href="#preview">Dashboard</a></li>
             <li><a href="#">Training</a></li>
         </ul>
-        <div class="nav-actions">
-            <a href="{{ route('login') }}" class="btn-nav-ghost">Log in</a>
+        <div class="nav-actions" id="nav-actions">
+            <a href="{{ route('login') }}" class="btn-nav-ghost">Demo</a>
             <a href="{{ route('register') }}" class="btn-nav-primary">Join Now</a>
         </div>
     </nav>
 
     <header class="hero">
-        <div class="hero-eyebrow">
-            <div class="eyebrow-dot"></div>
+        <div class="hero-eyebrow"
+            style="display:inline-flex; align-items:center; gap:0.6rem; padding:0.35rem 1rem; background:var(--accentDim); border:1px solid var(--border); border-radius:100px; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accentLight); margin-bottom:2rem;">
+            <div style="width:6px; height:6px; border-radius:50%; background:var(--accent);"></div>
             {{ $t['tagline'] }}
         </div>
 
@@ -1239,16 +977,21 @@
         <div class="hero-cta">
             <a href="{{ route('register') }}" class="btn-primary">
                 {{ $t['ctaPrimary'] }}
-                <svg viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" style="margin-left: 5px;">
+                    <path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
             </a>
-            <a href="#preview" class="btn-ghost">
-                {{ $t['ctaSecondary'] }}
+            <a href="{{ route('login') }}" class="btn-ghost">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M5 3l14 9-14 9V3z" />
+                </svg>
+                Try Demo
             </a>
         </div>
 
-        <div class="hero-stats">
+        <div class="hero-stats reveal">
             <div class="stat-item">
                 <div class="stat-num">$2.4M+</div>
                 <div class="stat-lbl">Commissions Paid</div>
@@ -1262,155 +1005,69 @@
                 <div class="stat-lbl">Live Tracking</div>
             </div>
         </div>
-
-        <div class="scroll-hint">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
-        </div>
     </header>
 
     <section class="section" id="features">
-        <div class="eyebrow">Tools for Growth</div>
         <h2 class="section-title">Everything You Need to <em>Succeed</em></h2>
-        <p class="section-desc">Access an entire suite of tools designed to help you prospect better, monitor your
-            volume, and maximize your compensation plan.</p>
-
         <div class="features-grid">
-            <div class="feat-card">
-                <div class="feat-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
-                    </svg>
-                </div>
-                <h3 class="feat-title">{{ $t['feat1t'] }}</h3>
-                <p class="feat-desc">{{ $t['feat1d'] }}</p>
+            <div class="feat-card reveal">
+                <h3 style="font-size:1.1rem; color:var(--text); margin-bottom:0.6rem;">{{ $t['feat1t'] }}</h3>
+                <p style="font-size:0.875rem; color:var(--textMuted);">{{ $t['feat1d'] }}</p>
             </div>
-
-            <div class="feat-card">
-                <div class="feat-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                    </svg>
-                </div>
-                <h3 class="feat-title">{{ $t['feat2t'] }}</h3>
-                <p class="feat-desc">{{ $t['feat2d'] }}</p>
+            <div class="feat-card reveal">
+                <h3 style="font-size:1.1rem; color:var(--text); margin-bottom:0.6rem;">{{ $t['feat2t'] }}</h3>
+                <p style="font-size:0.875rem; color:var(--textMuted);">{{ $t['feat2d'] }}</p>
             </div>
-
-            <div class="feat-card">
-                <div class="feat-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
-                    </svg>
-                </div>
-                <h3 class="feat-title">{{ $t['feat3t'] }}</h3>
-                <p class="feat-desc">{{ $t['feat3d'] }}</p>
+            <div class="feat-card reveal">
+                <h3 style="font-size:1.1rem; color:var(--text); margin-bottom:0.6rem;">{{ $t['feat3t'] }}</h3>
+                <p style="font-size:0.875rem; color:var(--textMuted);">{{ $t['feat3d'] }}</p>
             </div>
-
-            <div class="feat-card">
-                <div class="feat-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-                    </svg>
-                </div>
-                <h3 class="feat-title">{{ $t['feat4t'] }}</h3>
-                <p class="feat-desc">{{ $t['feat4d'] }}</p>
+            <div class="feat-card reveal">
+                <h3 style="font-size:1.1rem; color:var(--text); margin-bottom:0.6rem;">{{ $t['feat4t'] }}</h3>
+                <p style="font-size:0.875rem; color:var(--textMuted);">{{ $t['feat4d'] }}</p>
             </div>
         </div>
     </section>
 
     <section class="preview-section" id="preview">
-        <div class="preview-header">
-            <div class="eyebrow eyebrow-center">Sneak Peek</div>
-            <h2 class="section-title">Your <em>Performance</em> Dashboard</h2>
-        </div>
-
-        <div class="preview-wrap">
-            <div class="mock-chrome">
-                <div class="mock-dot dot-r"></div>
-                <div class="mock-dot dot-y"></div>
-                <div class="mock-dot dot-g"></div>
-                <div class="mock-url">member.mlmpro.com/dashboard</div>
-            </div>
-
+        <div class="preview-wrap reveal">
             <div class="mock-dashboard">
                 <div class="mock-sidebar">
-                    <div class="mock-logo-bar">MLM Pro.</div>
-                    <div class="mock-nav-item active">
-                        <div class="mock-dot-sm"></div> Dashboard
-                    </div>
-                    <div class="mock-nav-item">
-                        <div class="mock-dot-sm"></div> My Network
-                    </div>
-                    <div class="mock-nav-item">
-                        <div class="mock-dot-sm"></div> Earnings
-                    </div>
-                    <div class="mock-nav-item">
-                        <div class="mock-dot-sm"></div> Rank Progress
-                    </div>
-                    <div class="mock-nav-item">
-                        <div class="mock-dot-sm"></div> Marketing
-                    </div>
+                    <div class="mock-logo-bar" style="padding:0 1.25rem 1rem; color:var(--accent);">MLM Pro.</div>
+                    <div class="mock-nav-item"
+                        style="padding:0.5rem 1.25rem; font-size:0.7rem; color:var(--accentLight);">Dashboard</div>
+                    <div class="mock-nav-item"
+                        style="padding:0.5rem 1.25rem; font-size:0.7rem; color:var(--textFaint);">My Network</div>
+                    <div class="mock-nav-item"
+                        style="padding:0.5rem 1.25rem; font-size:0.7rem; color:var(--textFaint);">Earnings</div>
+                    <div class="mock-nav-item"
+                        style="padding:0.5rem 1.25rem; font-size:0.7rem; color:var(--textFaint);">Marketing</div>
                 </div>
 
                 <div class="mock-content">
                     <div class="mock-toprow">
                         <div class="mock-stat-card">
-                            <div class="mock-stat-num">$4,250.00</div>
-                            <div class="mock-stat-lbl">Total Earnings</div>
+                            <div style="font-size:1.1rem; color:var(--accentLight);">$4,250.00</div>
+                            <div style="font-size:0.6rem; color:var(--textFaint);">Total Earnings</div>
                         </div>
                         <div class="mock-stat-card">
-                            <div class="mock-stat-num">450 PV</div>
-                            <div class="mock-stat-lbl">Personal Volume</div>
-                        </div>
-                        <div class="mock-stat-card">
-                            <div class="mock-stat-num">3,200 TV</div>
-                            <div class="mock-stat-lbl">Team Volume</div>
-                        </div>
-                    </div>
-
-                    <div class="mock-chart-area">
-                        <div class="mock-chart-title">Earnings History (Last 7 Days)</div>
-                        <div class="mock-bars">
-                            <div class="mock-bar" style="height: 30%"></div>
-                            <div class="mock-bar" style="height: 50%"></div>
-                            <div class="mock-bar hi" style="height: 80%"></div>
-                            <div class="mock-bar" style="height: 40%"></div>
-                            <div class="mock-bar" style="height: 60%"></div>
-                            <div class="mock-bar hi" style="height: 90%"></div>
-                            <div class="mock-bar" style="height: 70%"></div>
+                            <div style="font-size:1.1rem; color:var(--accentLight);">3,200 TV</div>
+                            <div style="font-size:0.6rem; color:var(--textFaint);">Team Volume</div>
                         </div>
                     </div>
 
                     <div class="mock-table-area">
-                        <div class="mock-table-head">
-                            <div class="mock-th">Date</div>
-                            <div class="mock-th">Downline Member</div>
-                            <div class="mock-th">Level</div>
-                            <div class="mock-th">Commission</div>
+                        <div class="mock-table-head"
+                            style="display:flex; border-bottom:1px solid var(--borderSoft); padding-bottom:5px;">
+                            <div style="flex:1; font-size:0.6rem; color:var(--textFaint);">Member</div>
+                            <div style="flex:1; font-size:0.6rem; color:var(--textFaint);">Level</div>
+                            <div style="flex:1; font-size:0.6rem; color:var(--textFaint);">Commission</div>
                         </div>
-                        <div class="mock-tr">
-                            <div class="mock-td">Today, 10:42 AM</div>
-                            <div class="mock-td">Sarah Jenkins</div>
-                            <div class="mock-td">Level 1</div>
-                            <div class="mock-td mock-td-accent">+$120.00</div>
-                        </div>
-                        <div class="mock-tr">
-                            <div class="mock-td">Yesterday, 4:15 PM</div>
-                            <div class="mock-td">Mike Torres</div>
-                            <div class="mock-td">Level 2</div>
-                            <div class="mock-td mock-td-accent">+$45.50</div>
-                        </div>
-                        <div class="mock-tr">
-                            <div class="mock-td">Oct 12, 2:00 PM</div>
-                            <div class="mock-td">Elena R.</div>
-                            <div class="mock-td">Level 1</div>
-                            <div class="mock-td mock-td-accent">+$120.00</div>
+                        <div class="mock-tr"
+                            style="display:flex; padding:8px 0; border-bottom:1px solid var(--borderSoft);">
+                            <div style="flex:1; font-size:0.7rem;">Sarah J.</div>
+                            <div style="flex:1; font-size:0.7rem;">Level 1</div>
+                            <div style="flex:1; font-size:0.7rem; color:var(--accentLight);">+$120.00</div>
                         </div>
                     </div>
                 </div>
@@ -1418,92 +1075,91 @@
         </div>
     </section>
 
-    <!-- ═══ CTA BANNER ═══ -->
-    <section class="cta-banner">
-        <div class="cta-inner reveal">
-            <div class="cta-glow"></div>
-            <!-- Updated Title: Focus on Momentum and Management -->
-            <h2 class="cta-title">Fuel your <em>momentum</em> today</h2>
-
-            <!-- Updated Subtext: Focus on the Dashboard and Team Support -->
-            <p class="cta-sub">Your downline is waiting. Check your latest commissions, support your top performers,
-                and hit your next rank milestone.</p>
-
-            <div class="cta-btns">
-                <!-- Updated Primary: Goes straight to the workspace -->
-                <a href="{{ Route::has('dashboard') ? route('dashboard') : '#' }}" class="btn-primary">
-                    <svg viewBox="0 0 24 24">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-linejoin="round" />
-                    </svg>
-                    Open My Dashboard
-                </a>
-
-                <!-- Updated Secondary: Focus on Support/Resources -->
-                <a href="#resources" class="btn-ghost">
-                    <svg viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-                    </svg>
-                    View Resources
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══ FOOTER ═══ -->
-    <footer class="footer">
-        <div class="footer-logo">MLM<span>Pro</span></div>
+    {{-- <footer class="footer">
+        <div style="font-family:var(--heroFont); font-size:1.5rem; color:var(--accent); margin-bottom:1rem;">
+            MLM<span>Pro</span></div>
         <div class="footer-links">
             <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            {{-- <a href="#">Documentation</a> --}}
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
         </div>
-        <div class="footer-text">© {{ date('Y') }} {{ config('app.name', 'MLMPro') }}. All rights reserved.</div>
+        <div style="font-size:0.75rem; color:var(--textFaint);">© {{ date('Y') }}
+            {{ config('app.name', 'MLMPro') }}.</div>
+    </footer> --}}
+    <section class="section reveal">
+        <h2 class="section-title text-center">Our MLM Software Solutions</h2>
+        <p style="color:var(--textMuted); max-width:900px; margin:auto; text-align:center;">
+            We provide Binary MLM Software, Matrix MLM Software, Unilevel MLM Software,
+            Board MLM Software, Custom MLM Software Development and Network Marketing Software
+            services across Guwahati, Assam and India.
+        </p>
+    </section>
+    <footer class="footer">
+        <div style="font-family:var(--heroFont); font-size:1.5rem; color:var(--accent); margin-bottom:1rem;">
+            MICRO<span>MLM</span>
+        </div>
+
+        <div class="footer-links" style="margin-bottom:2rem;">
+            <a href="{{ route('website.pricing') }}">Pricing</a>
+            <a href="{{ route('website.features') }}">Features</a>
+            <a href="{{ route('website.contact') }}">Contact</a>
+            <a href="{{ route('website.binary-plan') }}">Binary Plan</a>
+            <a href="{{ route('website.unilevel-plan') }}">Unilevel Plan</a>
+            <a href="{{ route('website.matrix-plan') }}">Matrix Plan</a>
+        </div>
+
+        <div class="footer-links" style="margin-bottom:2rem;">
+            <a href="{{ route('website.mlm-guwahati') }}">MLM Software Guwahati</a>
+            <a href="{{ route('website.mlm-kolkata') }}">MLM Software Kolkata</a>
+            <a href="{{ route('website.mlm-assam') }}">MLM Software Assam</a>
+            <a href="{{ route('website.mlm-india') }}">MLM Software India</a>
+        </div>
+
+        <div class="footer-links" style="margin-bottom:2rem;">
+            <a href="{{ route('website.mlm-software') }}">MLM Software</a>
+            <a href="{{ route('website.custom-mlm-software') }}">Custom MLM Software</a>
+            <a href="{{ route('website.buy-mlm-software') }}">Buy MLM Software</a>
+            <a href="{{ route('website.network-marketing-software') }}">Network Marketing Software</a>
+            <a href="{{ route('website.mlm-software-development') }}">MLM Software Development</a>
+        </div>
+
+        <div class="footer-links" style="margin-bottom:2rem;">
+            <a href="{{ route('website.blog.legality-of-mlm-in-india') }}">MLM Legality in India</a>
+            <a href="{{ route('website.blog.how-to-select-best-mlm-software') }}">Best MLM Software Guide</a>
+        </div>
+
+        <div style="font-size:0.75rem; color:var(--textFaint);">
+            © {{ date('Y') }} {{ config('app.name', 'MLMPro') }}. All Rights Reserved.
+        </div>
     </footer>
 
     <script>
+        // MOBILE TOGGLE LOGIC
+        const toggle = document.getElementById('mobile-toggle');
+        const links = document.getElementById('nav-links');
+        const actions = document.getElementById('nav-actions');
+
+        toggle.addEventListener('click', () => {
+            links.classList.toggle('active');
+            actions.classList.toggle('active');
+        });
+
+        // NAVBAR SCROLL
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('nav');
-            if (window.scrollY > 20) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-    </script>
-    <script>
-        // 1. Navbar Scroll Effect
-        const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+            nav.classList.toggle('scrolled', window.scrollY > 20);
         });
 
-        // 2. Scroll Reveal Intersection Observer
-        const revealCallback = (entries, observer) => {
+        // REVEAL ANIMATION
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    // Optional: Stop observing once revealed (uncomment the line below)
-                    // observer.unobserve(entry.target); 
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        };
-
-        const revealObserver = new IntersectionObserver(revealCallback, {
-            root: null, // use the viewport
-            threshold: 0.15 // trigger when 15% of the element is visible
+        }, {
+            threshold: 0.1
         });
 
-        // Apply the observer to all elements with the 'reveal' class
-        document.querySelectorAll('.reveal').forEach(el => {
-            revealObserver.observe(el);
-        });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 
