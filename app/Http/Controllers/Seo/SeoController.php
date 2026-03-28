@@ -106,4 +106,8 @@ class SeoController extends Controller
     {
         return view('seo.mlm-software-development');
     }
+    public function pricing()
+    {
+        return view('seo.pricing');
+    }
 }

@@ -1,28 +1,9 @@
-{{-- //pricing page optimized for conversions and SEO --}}
 @extends('layouts.website')
 @section('title', 'MLM Software Price in India | Best Investment Plans')
 
 @section('meta_desc', 'Get enterprise-grade MLM software starting at ₹25,000. Free domain, hosting, and automated TDS/GST features included. Compare our Binary and Matrix plan packages.')
 
 @section('content')
-    {{-- Schema Markup for Google Search (Rich Snippets) --}}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org/",
-      "@type": "Product",
-      "name": "MicroMLM Enterprise Software",
-      "image": "https://micromlm.in/assets/images/logo.png",
-      "description": "Enterprise MLM software with Binary, Matrix, and Unilevel plan support.",
-      "brand": { "@type": "Brand", "name": "MicroMLM" },
-      "offers": {
-        "@type": "AggregateOffer",
-        "priceCurrency": "INR",
-        "lowPrice": "25000",
-        "highPrice": "75000",
-        "offerCount": "3"
-      }
-    }
-    </script>
 
     <section class="hero-section text-center py-5">
         <div class="container">
