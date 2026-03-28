@@ -108,7 +108,7 @@
                 'heroFont' => "'Syne', sans-serif",
                 'bodyFont' => "'DM Sans', sans-serif",
                 'heroWeight' => '700',
-                'tagline' => 'Track Your Success',
+                'tagline' => 'Call - 9101177123',
                 'headline' => 'Accelerate Your<br><em>Growth</em> & Earnings',
                 'sub' =>
                     'Your personal command center. Monitor real-time commissions, visualize your growing downline, and unlock your next rank with precision.',
@@ -957,6 +957,7 @@
             <li><a href="#features">Features</a></li>
             <li><a href="#preview">Dashboard</a></li>
             <li><a href="#">Training</a></li>
+            <li><a href="#">Call - 9101177123</a></li>
         </ul>
         <div class="nav-actions" id="nav-actions">
             <a href="{{ route('login') }}" class="btn-nav-ghost">Demo</a>
