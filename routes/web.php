@@ -106,6 +106,7 @@ Route::get('/contact', [SeoController::class, 'contact'])->name('website.contact
 Route::get('/binary-plan', [SeoController::class, 'binaryPlan'])->name('website.binary-plan');
 Route::get('/unilevel-plan', [SeoController::class, 'unilevelPlan'])->name('website.unilevel-plan');
 Route::get('/matrix-plan', [SeoController::class, 'matrixPlan'])->name('website.matrix-plan');
+Route::get('/mlm-plan-calculator', [SeoController::class, 'planCalculator'])->name('website.plan-calculator');
 
 Route::get('/blog/legality-of-mlm-in-india', [SeoController::class, 'legalityOfMlmInIndia'])
     ->name('website.blog.legality-of-mlm-in-india');

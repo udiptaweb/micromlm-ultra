@@ -365,6 +365,9 @@
 
     {{-- Hero --}}
     <header class="hero">
+        {{-- Plan profit simulator first: configure any plan, see scenarios, get profitable configurations --}}
+        @include('partials.plan-simulator', ['isLight' => $isLight, 'atTop' => true, 'fullPageLink' => true])
+
         <div class="hero-eyebrow"
             style="display:inline-flex; align-items:center; gap:0.6rem; padding:0.35rem 1rem; background:var(--accentDim); border:1px solid var(--border); border-radius:100px; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accentLight); margin-bottom:2rem;">
             <div style="width:6px; height:6px; border-radius:50%; background:var(--accent);"></div>
@@ -386,6 +389,12 @@
                     <path d="M5 3l14 9-14 9V3z" />
                 </svg>
                 Try Demo
+            </a>
+            <a href="{{ route('website.plan-calculator') }}" class="btn-ghost">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19V5M4 19h16M8 15l3-4 3 2 5-6" />
+                </svg>
+                MLM Plan Calculator
             </a>
         </div>
 

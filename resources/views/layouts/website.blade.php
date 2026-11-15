@@ -632,6 +632,7 @@
         </button>
 
         <ul class="nav-links" id="nav-links">
+            <li><a href="{{ route('website.plan-calculator') }}">Plan Calculator</a></li>
             <li><a href="{{ route('website.features') }}">Features</a></li>
             <li><a href="{{ route('website.pricing') }}">Pricing</a></li>
             <li><a href="{{ route('website.contact') }}">Contact</a></li>
@@ -662,6 +663,7 @@
             <a href="{{ route('website.binary-plan') }}">Binary Plan</a>
             <a href="{{ route('website.unilevel-plan') }}">Unilevel Plan</a>
             <a href="{{ route('website.matrix-plan') }}">Matrix Plan</a>
+            <a href="{{ route('website.plan-calculator') }}">MLM Plan Calculator</a>
         </div>
 
         <div class="footer-links" style="margin-bottom:2rem;">

@@ -11,6 +11,7 @@ class SeoController extends Controller
     {
         $pages = [
             ['url' => '/', 'prop' => '1.0'],
+            ['url' => '/mlm-plan-calculator', 'prop' => '0.9'],
             ['url' => '/pricing', 'prop' => '0.9'],
             ['url' => '/features', 'prop' => '0.8'],
             ['url' => '/contact', 'prop' => '0.7'],
@@ -49,6 +50,12 @@ class SeoController extends Controller
     {
         return view('seo.unilevel-plan');
     }
+    /** Free MLM plan calculator / profit simulator (SEO landing page). */
+    public function planCalculator()
+    {
+        return view('seo.mlm-plan-calculator');
+    }
+
     public function matrixPlan()
     {
         return view('seo.matrix-plan');
